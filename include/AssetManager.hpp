@@ -2,6 +2,7 @@
 
 #include "raylib.h"
 #include <unordered_map>
+#include <string>
 
 // Unique IDs for all the assets used in this  game.
 enum class AssetId
