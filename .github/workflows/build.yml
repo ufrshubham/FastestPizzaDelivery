@@ -22,7 +22,7 @@ jobs:
         run: cmake -E make_directory ${{github.workspace}}/build
 
       - name: Get dependencies
-        run: sudo apt update && sudo apt install -y libudev-dev libopenal-dev libvorbis-dev libflac-dev libxrandr-dev libfreetype6-dev make libgl1-mesa-dev
+        run: sudo apt update && sudo apt install -y libxinerama-dev libudev-dev libopenal-dev libvorbis-dev libflac-dev libxrandr-dev libfreetype6-dev make libgl1-mesa-dev
         if: matrix.os == 'ubuntu-latest'
 
       - name: Configure CMake
