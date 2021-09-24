@@ -18,7 +18,7 @@ Game::Game() : m_assetManager(std::make_unique<AssetManager>())
     SetCameraMode(m_camera, CAMERA_FREE);
     SetTargetFPS(60);
 
-    m_assetManager->Load(AssetId::PizzaTruck, "resources/pizza_food_vendor_truck/scene.gltf");
+    m_assetManager->Load(AssetId::PizzaTruck, std::string("resources/pizza_food_vendor_truck/scene.gltf"));
 
     m_entities.push_back(std::make_unique<Road>());
     m_entities.push_back(std::make_unique<PizzaTruck>(*m_assetManager));
