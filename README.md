@@ -1,6 +1,18 @@
-# Fastest Pizza Delivery
+# Fastest Pizza Delivery (WIP)
 
-A game made for the [Game (Engineless) Jam](https://itch.io/jam/engineless-jam)
+A fun little 3D game made for the [Game (Engineless) Jam](https://itch.io/jam/engineless-jam). It is still is development but the basic gameplay is something like this:
+
+- You are owner of a pizza truck and you want to deliver as many pizzas as possible, as fast as possible.
+
+- With your years of experience you've decided to optimize the delivery process by completely eliminating the need to stop your truck. Instead, you launch the pizza directly at customers from a moving truck 😅.
+
+- Every missed hit means a loss to your business.
+
+- Avoid oncoming traffic (cause your life is kinda important😅).
+
+- Potholes = wasted pizza
+
+Play "Fastest Pizza Delivery" and see much money you can make!
 
 ## Demo
 
@@ -17,6 +29,8 @@ A game made for the [Game (Engineless) Jam](https://itch.io/jam/engineless-jam)
 ## Release
 
 - Still WIP
+
+- Get it on [itch.io](https://ufrshubham.itch.io/fastest-pizza-delivery)
 
 ## Build instruction
 
