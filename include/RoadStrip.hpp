@@ -17,6 +17,7 @@ public:
     void SetPosition(Vector3 position);
 
 private:
+    float m_speed = 80.f;
     Vector3 m_stripPosition = {200.f,
                                0.f,
                                0.f};

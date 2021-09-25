@@ -32,6 +32,8 @@ private:
     const int SCREEN_HEIGHT = 1080 / 2;
     const char *TITLE = "Fastest Pizza Delivery : Engine Less Jam";
 
+    float m_worldSpeed = 10.f;
+
     Camera3D m_camera = {};
     Vector3 m_roadStripPosition = {40.f, 0.01f, 0.f};
 

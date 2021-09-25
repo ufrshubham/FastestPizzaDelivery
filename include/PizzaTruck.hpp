@@ -11,7 +11,7 @@ class AssetManager;
 class PizzaTruck : public Entity, public IDrawable
 {
 public:
-    PizzaTruck(const AssetManager &assetManager);
+    PizzaTruck(const AssetManager &assetManager, const Vector3 &position);
 
     void ProcessInputs() override final;
     void Update(float deltaTime) override final;
@@ -19,9 +19,12 @@ public:
 
 private:
     Model m_truckModel = {};
-    Vector3 m_pizzaTruckPosition = {0.0f, 0.0f, 0.0f};
+
+    Vector3 m_position = {0.0f, 0.0f, 0.0f};
+    float m_speed = 0.f;
     float m_truckRoll = 0.f;
     float m_deltaRoll = 0.09f;
-    float m_deltaY = 0.02f;
-    const float STEER_SPEED = 0.5f;
+    float m_deltaY = 1.2f;
+
+    const float STEER_SPEED = 30.f;
 };

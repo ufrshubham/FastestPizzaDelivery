@@ -3,6 +3,7 @@
 #include "PizzaTruck.hpp"
 #include "Road.hpp"
 #include "Pizza.hpp"
+#include "House.hpp"
 
 #include "raylib.h"
 
@@ -19,11 +20,13 @@ Game::Game() : m_assetManager(std::make_unique<AssetManager>())
     SetCameraMode(m_camera, CAMERA_FREE);
     SetTargetFPS(60);
 
-    m_assetManager->Load(AssetId::PizzaTruck, "resources/pizza_food_vendor_truck/scene.gltf");
-    m_assetManager->Load(AssetId::Pizza, "resources/pizza/scene.gltf");
+    m_assetManager->Load(AssetId::PizzaTruck, "resources/models/pizza_food_vendor_truck/scene.gltf");
+    m_assetManager->Load(AssetId::Pizza, "resources/models/pizza/scene.gltf");
+    m_assetManager->Load(AssetId::House, "resources/models/houses/house_type04.gltf");
 
     m_entities.push_back(std::make_unique<Road>());
-    m_entities.push_back(std::make_unique<PizzaTruck>(*m_assetManager));
+    m_entities.push_back(std::make_unique<PizzaTruck>(*m_assetManager, Vector3{0.0f, 0.0f, 0.0f}));
+    m_entities.push_back(std::make_unique<House>(*m_assetManager, Vector3{500.0f, 0.0f, -15.0f}));
 }
 
 Game::~Game()
@@ -38,7 +41,15 @@ void Game::Run()
         UpdateCamera(&m_camera);
 
         this->ProcessInputs();
-        this->Update(GetFrameTime());
+
+        auto deltaTime = GetFrameTime();
+
+        while (deltaTime > (1 / 60.f))
+        {
+            deltaTime -= 1 / 60.f;
+            this->Update(1 / 60.f);
+        }
+
         this->Draw();
     }
 }

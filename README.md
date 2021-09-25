@@ -47,3 +47,5 @@ $ cmake ..
 - [Pizza Food Vendor Truck](https://sketchfab.com/3d-models/pizza-food-vendor-truck-f9faf8cfe0b44b6ca1dc146411bc651b) by [siapap](https://sketchfab.com/siapap) is licensed under [CC Attribution](https://creativecommons.org/licenses/by/4.0/)
 
 - [Pizza](https://sketchfab.com/3d-models/pizza-f8e13d5694464e8581907dde27bb59c8) by [Ricardo Sanchez](https://sketchfab.com/380660711785) is licensed under [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/)
+
+- [City Kit (Suburban)](https://www.kenney.nl/assets/city-kit-suburban) by [Kenney](www.kenney.nl) is licensed under [Creative Commons Zero, CC0](http://creativecommons.org/publicdomain/zero/1.0/)

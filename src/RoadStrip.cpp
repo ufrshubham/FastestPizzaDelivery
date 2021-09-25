@@ -2,7 +2,7 @@
 
 void RoadStrip::Update(float deltaTime)
 {
-    m_stripPosition.x -= 1.f;
+    m_stripPosition.x -= m_speed * deltaTime;
 }
 
 void RoadStrip::Draw() const
