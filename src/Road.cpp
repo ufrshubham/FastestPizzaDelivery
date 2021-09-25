@@ -1,7 +1,5 @@
 #include "Road.hpp"
 
-#include "raylib.h"
-
 Road::Road()
 {
     int count = 0;
@@ -16,14 +14,21 @@ Road::Road()
 
 void Road::Update(float deltaTime)
 {
+    int i = 0;
     for (auto &strip : m_roadStrips)
     {
         strip.Update(deltaTime);
 
-        if (strip.GetPosition().x < -10)
+        if (strip.GetPosition().x < -30)
         {
+            auto lastRoadStrip = m_roadStrips.at(lastRoadStripIndex);
+            auto position = lastRoadStrip.GetPosition();
+            position.x += 30.f;
 
+            strip.SetPosition(position);
+            lastRoadStripIndex = i;
         }
+        ++i;
     }
 }
 
@@ -34,24 +39,4 @@ void Road::Draw() const
     {
         strip.Draw();
     }
-}
-
-void RoadStrip::Update(float deltaTime)
-{
-    m_stripPosition.x -= 1.f;
-}
-
-void RoadStrip::Draw() const
-{
-    DrawPlane(m_stripPosition, STRIP_SIZE, STRIP_COLOR);
-}
-
-Vector3 RoadStrip::GetPosition() const
-{
-    return m_stripPosition;
-}
-
-void RoadStrip::SetPosition(Vector3 position)
-{
-    m_stripPosition = position;
 }

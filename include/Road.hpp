@@ -2,29 +2,13 @@
 
 #include "Entity.hpp"
 #include "IDrawable.hpp"
+#include "RoadStrip.hpp"
 
 #include "raylib.h"
 
 #include <array>
 
-class RoadStrip : public Entity,
-                  public IDrawable
-{
-public:
-    void Update(float deltaTime) override final;
-    void Draw() const override final;
-
-    Vector3 GetPosition() const;
-    void SetPosition(Vector3 position);
-
-private:
-    Vector3 m_stripPosition = {200.f,
-                               0.f,
-                               0.f};
-    const Vector2 STRIP_SIZE = {20.f, 1.f};
-    const Color STRIP_COLOR = WHITE;
-};
-
+// This class represents the road in game world.
 class Road : public Entity,
              public IDrawable
 {
@@ -40,5 +24,7 @@ private:
     const Vector2 ROAD_SIZE = {1000.f, 30.f};
     const Color ROAD_COLOR = DARKGRAY;
 
-    std::array<RoadStrip, 10> m_roadStrips;
+    static const int NUMBER_OF_ROAD_STRIPS = 12;
+    int lastRoadStripIndex = NUMBER_OF_ROAD_STRIPS - 1;
+    std::array<RoadStrip, NUMBER_OF_ROAD_STRIPS> m_roadStrips;
 };
