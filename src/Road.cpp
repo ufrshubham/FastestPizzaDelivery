@@ -3,7 +3,7 @@
 Road::Road()
 {
     int count = 0;
-    Vector3 position = {0.f, 0.01f, 0.f};
+    Vector3 position = {0.f, 0.02f, 0.f};
 
     for (auto &strip : m_roadStrips)
     {

@@ -2,6 +2,7 @@
 #include "AssetManager.hpp"
 #include "PizzaTruck.hpp"
 #include "Road.hpp"
+#include "Pizza.hpp"
 
 #include "raylib.h"
 
@@ -18,7 +19,8 @@ Game::Game() : m_assetManager(std::make_unique<AssetManager>())
     SetCameraMode(m_camera, CAMERA_FREE);
     SetTargetFPS(60);
 
-    m_assetManager->Load(AssetId::PizzaTruck, std::string("resources/pizza_food_vendor_truck/scene.gltf"));
+    m_assetManager->Load(AssetId::PizzaTruck, "resources/pizza_food_vendor_truck/scene.gltf");
+    m_assetManager->Load(AssetId::Pizza, "resources/pizza/scene.gltf");
 
     m_entities.push_back(std::make_unique<Road>());
     m_entities.push_back(std::make_unique<PizzaTruck>(*m_assetManager));
@@ -43,6 +45,11 @@ void Game::Run()
 
 void Game::ProcessInputs()
 {
+    if (IsKeyPressed(KEY_P))
+    {
+        m_entities.push_back(std::make_unique<Pizza>(*m_assetManager));
+    }
+
     for (const auto &entity : m_entities)
     {
         entity->ProcessInputs();
@@ -55,7 +62,6 @@ void Game::Update(float deltaTime)
     {
         entity->Update(deltaTime);
     }
-    // m_roadStripPosition.x -= 1;
 }
 
 void Game::Draw() const
@@ -63,11 +69,6 @@ void Game::Draw() const
     BeginDrawing();
     ClearBackground(DARKGREEN);
     BeginMode3D(m_camera);
-
-    // for (int i = 1; i < 10; ++i)
-    // {
-    //     DrawPlane({m_roadStripPosition.x + i * 30, m_roadStripPosition.y, m_roadStripPosition.z}, {20, 1}, WHITE);
-    // }
 
     for (const auto &entity : m_entities)
     {

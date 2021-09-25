@@ -7,7 +7,8 @@
 // Unique IDs for all the assets used in this  game.
 enum class AssetId
 {
-    PizzaTruck
+    PizzaTruck,
+    Pizza
 };
 
 // This class holds all the assets used in this game.
@@ -18,7 +19,7 @@ public:
     virtual ~AssetManager();
 
     AssetManager(const AssetManager &) = delete;
-    AssetManager& operator=(const AssetManager &) = delete;
+    AssetManager &operator=(const AssetManager &) = delete;
 
     // Loads the model located at given path and maps it to given AssetId.
     void Load(AssetId id, const std::string &path);

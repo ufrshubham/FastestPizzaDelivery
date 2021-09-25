@@ -2,6 +2,10 @@
 
 A game made for the [Game (Engineless) Jam](https://itch.io/jam/engineless-jam)
 
+## Demo
+
+![Demo](branding/demo.gif)
+
 ## Dependencies
 
 - [git](https://git-scm.com/): For correctly cloning this project
@@ -40,4 +44,6 @@ $ cmake ..
 
 - For details about Raylib's license check [raysan5/raylib](https://github.com/raysan5/raylib)
 
-- Pizza Food Vendor Truck model is provided by [siapap](https://sketchfab.com/siapap) from [sketchfab.com](https://sketchfab.com/) and is licensed under [CC Attribution](https://creativecommons.org/licenses/by/4.0/)
+- [Pizza Food Vendor Truck](https://sketchfab.com/3d-models/pizza-food-vendor-truck-f9faf8cfe0b44b6ca1dc146411bc651b) by [siapap](https://sketchfab.com/siapap) is licensed under [CC Attribution](https://creativecommons.org/licenses/by/4.0/)
+
+- [Pizza](https://sketchfab.com/3d-models/pizza-f8e13d5694464e8581907dde27bb59c8) by [Ricardo Sanchez](https://sketchfab.com/380660711785) is licensed under [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/)

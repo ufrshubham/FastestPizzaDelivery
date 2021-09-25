@@ -10,7 +10,7 @@ AssetManager::~AssetManager()
 
 void AssetManager::Load(AssetId id, const std::string &path)
 {
-    m_assetMap[id] = LoadModel("resources/pizza_food_vendor_truck/scene.gltf");
+    m_assetMap[id] = LoadModel(path.c_str());
 }
 
 Model AssetManager::Get(AssetId id) const
