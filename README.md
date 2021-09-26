@@ -63,3 +63,5 @@ $ cmake ..
 - [Pizza](https://sketchfab.com/3d-models/pizza-f8e13d5694464e8581907dde27bb59c8) by [Ricardo Sanchez](https://sketchfab.com/380660711785) is licensed under [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/)
 
 - [City Kit (Suburban)](https://www.kenney.nl/assets/city-kit-suburban) by [Kenney](www.kenney.nl) is licensed under [Creative Commons Zero, CC0](http://creativecommons.org/publicdomain/zero/1.0/)
+
+- [Low-Poly Car](https://sketchfab.com/3d-models/low-poly-car-3bee85b8530046e5bb11a57965129187) by [Lawrence Pompey](https://sketchfab.com/lawrencepompey) is licensed under [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/)

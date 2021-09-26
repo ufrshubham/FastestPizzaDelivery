@@ -5,6 +5,8 @@ TreeSmall::TreeSmall(const AssetManager &assetManager, const Vector3 &position, 
 {
     this->SetPosition(position);
     this->SetScale(scale);
+    // Todo: Need to improve this.
+    m_initialPosition.x = 500.0f;
     m_treeModel = assetManager.Get(AssetId::TreeSmall);
 }
 

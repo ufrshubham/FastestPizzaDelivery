@@ -39,4 +39,6 @@ private:
 
     std::unique_ptr<AssetManager> m_assetManager;
     std::vector<std::unique_ptr<Entity>> m_entities;
+
+    bool m_isPaused = false;
 };

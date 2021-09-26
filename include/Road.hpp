@@ -21,7 +21,7 @@ public:
 
 private:
     const Vector2 ROAD_SIZE = {1000.f, 30.f};
-    const Color ROAD_COLOR = DARKGRAY;
+    const Color ROAD_COLOR = {42, 56, 57, 255};
 
     static const int NUMBER_OF_ROAD_STRIPS = 12;
     int lastRoadStripIndex = NUMBER_OF_ROAD_STRIPS - 1;

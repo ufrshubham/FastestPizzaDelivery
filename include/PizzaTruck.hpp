@@ -20,6 +20,8 @@ public:
 
 private:
     Model m_truckModel = {};
+    BoundingBox m_boundingBox = {};
+    BoundingBox m_collisionBox = {};
 
     float m_speed = 0.f;
     float m_truckRoll = 0.f;
