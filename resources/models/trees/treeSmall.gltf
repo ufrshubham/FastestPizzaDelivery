@@ -1,0 +1,253 @@
+{
+    "asset" : {
+        "generator" : "Khronos glTF Blender I/O v1.6.16",
+        "version" : "2.0"
+    },
+    "scene" : 0,
+    "scenes" : [
+        {
+            "name" : "Scene",
+            "nodes" : [
+                1,
+                2,
+                3
+            ]
+        }
+    ],
+    "nodes" : [
+        {
+            "mesh" : 0,
+            "name" : "tree_small",
+            "scale" : [
+                0.8100000023841858,
+                0.8100000023841858,
+                0.8100000023841858
+            ]
+        },
+        {
+            "children" : [
+                0
+            ],
+            "name" : "tmpParent"
+        },
+        {
+            "name" : "Light",
+            "rotation" : [
+                0.16907575726509094,
+                0.7558803558349609,
+                -0.27217137813568115,
+                0.570947527885437
+            ],
+            "translation" : [
+                4.076245307922363,
+                5.903861999511719,
+                -1.0054539442062378
+            ]
+        },
+        {
+            "name" : "Camera",
+            "rotation" : [
+                0.483536034822464,
+                0.33687159419059753,
+                -0.20870360732078552,
+                0.7804827094078064
+            ],
+            "translation" : [
+                7.358891487121582,
+                4.958309173583984,
+                6.925790786743164
+            ]
+        }
+    ],
+    "materials" : [
+        {
+            "name" : "roof",
+            "pbrMetallicRoughness" : {
+                "baseColorFactor" : [
+                    0.33725491166114807,
+                    0.7372549176216125,
+                    0.6000000238418579,
+                    1
+                ]
+            }
+        },
+        {
+            "name" : "wood",
+            "pbrMetallicRoughness" : {
+                "baseColorFactor" : [
+                    0.8784313797950745,
+                    0.6039215922355652,
+                    0.4470588266849518,
+                    1
+                ]
+            }
+        }
+    ],
+    "meshes" : [
+        {
+            "name" : "Mesh tree_small",
+            "primitives" : [
+                {
+                    "attributes" : {
+                        "POSITION" : 0,
+                        "NORMAL" : 1,
+                        "TANGENT" : 2,
+                        "TEXCOORD_0" : 3
+                    },
+                    "indices" : 4,
+                    "material" : 0
+                },
+                {
+                    "attributes" : {
+                        "POSITION" : 5,
+                        "NORMAL" : 6,
+                        "TANGENT" : 7,
+                        "TEXCOORD_0" : 8
+                    },
+                    "indices" : 9,
+                    "material" : 1
+                }
+            ]
+        }
+    ],
+    "accessors" : [
+        {
+            "bufferView" : 0,
+            "componentType" : 5126,
+            "count" : 88,
+            "max" : [
+                0.12990380823612213,
+                0.699999988079071,
+                0.15000000596046448
+            ],
+            "min" : [
+                -0.12990380823612213,
+                0.15568000078201294,
+                -0.15000000596046448
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 1,
+            "componentType" : 5126,
+            "count" : 88,
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 2,
+            "componentType" : 5126,
+            "count" : 88,
+            "type" : "VEC4"
+        },
+        {
+            "bufferView" : 3,
+            "componentType" : 5126,
+            "count" : 88,
+            "type" : "VEC2"
+        },
+        {
+            "bufferView" : 4,
+            "componentType" : 5123,
+            "count" : 114,
+            "type" : "SCALAR"
+        },
+        {
+            "bufferView" : 5,
+            "componentType" : 5126,
+            "count" : 24,
+            "max" : [
+                0.032249998301267624,
+                0.15568000078201294,
+                0.032249998301267624
+            ],
+            "min" : [
+                -0.032249998301267624,
+                0,
+                -0.032249998301267624
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 6,
+            "componentType" : 5126,
+            "count" : 24,
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 7,
+            "componentType" : 5126,
+            "count" : 24,
+            "type" : "VEC4"
+        },
+        {
+            "bufferView" : 8,
+            "componentType" : 5126,
+            "count" : 24,
+            "type" : "VEC2"
+        },
+        {
+            "bufferView" : 9,
+            "componentType" : 5123,
+            "count" : 30,
+            "type" : "SCALAR"
+        }
+    ],
+    "bufferViews" : [
+        {
+            "buffer" : 0,
+            "byteLength" : 1056,
+            "byteOffset" : 0
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 1056,
+            "byteOffset" : 1056
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 1408,
+            "byteOffset" : 2112
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 704,
+            "byteOffset" : 3520
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 228,
+            "byteOffset" : 4224
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 288,
+            "byteOffset" : 4452
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 288,
+            "byteOffset" : 4740
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 384,
+            "byteOffset" : 5028
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 192,
+            "byteOffset" : 5412
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 60,
+            "byteOffset" : 5604
+        }
+    ],
+    "buffers" : [
+        {
+            "byteLength" : 5664,
+            "uri" : "treeSmall.bin"
+        }
+    ]
+}

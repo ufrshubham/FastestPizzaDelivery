@@ -9,7 +9,8 @@ enum class AssetId
 {
     PizzaTruck,
     Pizza,
-    House
+    House,
+    TreeSmall
 };
 
 // This class holds all the assets used in this game.
