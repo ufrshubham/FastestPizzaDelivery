@@ -1,22 +1,24 @@
 #include "House.hpp"
 #include "AssetManager.hpp"
 
-House::House(const AssetManager &assetManager, const Vector3 &position) : m_position(position), m_initialPosition(position)
+House::House(const AssetManager &assetManager, const Vector3 &position, const Vector3 &scale) : m_initialPosition(position)
 {
+    this->SetPosition(position);
+    this->SetScale(scale);
     m_houseModel = assetManager.Get(AssetId::House);
 }
 
 void House::Update(float deltaTime)
 {
-    m_position.x -= m_speed * deltaTime;
+    this->Move({-m_speed * deltaTime, 0.f, 0.f});
 
-    if (m_position.x < -40)
+    if (this->GetPosition().x < -40)
     {
-        m_position = m_initialPosition;
+        this->SetPosition(m_initialPosition);
     }
 }
 
 void House::Draw() const
 {
-    DrawModelEx(m_houseModel, m_position, {1.f, 0.f, 0.f}, 0.f, {20.f, 20.f, 20.f}, WHITE);
+    DrawModelEx(m_houseModel, this->GetPosition(), {1.f, 0.f, 0.f}, 0.f, this->GetScale(), WHITE);
 }

@@ -1,8 +1,9 @@
 #pragma once
 
 #include "Entity.hpp"
-#include "IDrawable.hpp"
+#include "Transformable.hpp"
 #include "RoadStrip.hpp"
+#include "IDrawable.hpp"
 
 #include "raylib.h"
 
@@ -10,17 +11,15 @@
 
 // This class represents the road in game world.
 class Road : public Entity,
+             public Transformable,
              public IDrawable
 {
 public:
-    Road();
+    Road(const Vector3& position);
     void Update(float deltaTime) override final;
     void Draw() const override final;
 
 private:
-    const Vector3 ROAD_POSITION = {200.f,
-                                   0.f,
-                                   0.f};
     const Vector2 ROAD_SIZE = {1000.f, 30.f};
     const Color ROAD_COLOR = DARKGRAY;
 

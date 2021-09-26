@@ -2,20 +2,10 @@
 
 void RoadStrip::Update(float deltaTime)
 {
-    m_stripPosition.x -= m_speed * deltaTime;
+    this->Move({-m_speed * deltaTime, 0.f, 0.f});
 }
 
 void RoadStrip::Draw() const
 {
-    DrawPlane(m_stripPosition, STRIP_SIZE, STRIP_COLOR);
-}
-
-Vector3 RoadStrip::GetPosition() const
-{
-    return m_stripPosition;
-}
-
-void RoadStrip::SetPosition(Vector3 position)
-{
-    m_stripPosition = position;
+    DrawPlane(this->GetPosition(), STRIP_SIZE, STRIP_COLOR);
 }

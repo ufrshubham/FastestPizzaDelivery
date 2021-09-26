@@ -1,14 +1,16 @@
 #include "Road.hpp"
 
-Road::Road()
+Road::Road(const Vector3 &position)
 {
+    this->SetPosition(position);
+
     int count = 0;
-    Vector3 position = {0.f, 0.02f, 0.f};
+    Vector3 roadStripPosition = {0.f, 0.02f, 0.f};
 
     for (auto &strip : m_roadStrips)
     {
-        position.x += 30;
-        strip.SetPosition(position);
+        roadStripPosition.x += 30;
+        strip.SetPosition(roadStripPosition);
     }
 }
 
@@ -34,7 +36,7 @@ void Road::Update(float deltaTime)
 
 void Road::Draw() const
 {
-    DrawPlane(ROAD_POSITION, ROAD_SIZE, ROAD_COLOR);
+    DrawPlane(this->GetPosition(), ROAD_SIZE, ROAD_COLOR);
     for (const auto &strip : m_roadStrips)
     {
         strip.Draw();

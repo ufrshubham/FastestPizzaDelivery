@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Entity.hpp"
+#include "Transformable.hpp"
 #include "IDrawable.hpp"
 
 #include "raylib.h"
@@ -8,7 +9,7 @@
 class AssetManager;
 
 // This class represents the PizzaTrick in game world.
-class PizzaTruck : public Entity, public IDrawable
+class PizzaTruck : public Entity, public Transformable, public IDrawable
 {
 public:
     PizzaTruck(const AssetManager &assetManager, const Vector3 &position);
@@ -20,7 +21,6 @@ public:
 private:
     Model m_truckModel = {};
 
-    Vector3 m_position = {0.0f, 0.0f, 0.0f};
     float m_speed = 0.f;
     float m_truckRoll = 0.f;
     float m_deltaRoll = 0.09f;

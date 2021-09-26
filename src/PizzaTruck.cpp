@@ -2,24 +2,25 @@
 #include "AssetManager.hpp"
 
 PizzaTruck::PizzaTruck(const AssetManager &assetManager, const Vector3 &position)
-    : m_position(position)
 {
+    this->SetPosition(position);
     m_truckModel = assetManager.Get(AssetId::PizzaTruck);
 }
 
 void PizzaTruck::ProcessInputs()
 {
     m_speed = 0.f;
+    auto position = this->GetPosition();
     if (IsKeyDown(KEY_A) || IsKeyDown(KEY_LEFT))
     {
-        if (m_position.z > -10)
+        if (position.z > -10)
         {
             m_speed = -STEER_SPEED;
         }
     }
     if (IsKeyDown(KEY_D) || IsKeyDown(KEY_RIGHT))
     {
-        if (m_position.z < 10)
+        if (position.z < 10)
         {
             m_speed = STEER_SPEED;
         }
@@ -34,17 +35,17 @@ void PizzaTruck::Update(float deltaTime)
     }
     m_truckRoll += m_deltaRoll;
 
-    if (m_position.y > 0.5 || m_position.y < -0.1)
+    auto position = this->GetPosition();
+    if (position.y > 0.5 || position.y < -0.1)
     {
         m_deltaY = -1 * m_deltaY;
     }
 
-    m_position.y += m_deltaY * deltaTime;
-
-    m_position.z += m_speed * deltaTime;
+    this->Move({0.f,
+                m_deltaY * deltaTime, m_speed * deltaTime});
 }
 
 void PizzaTruck::Draw() const
 {
-    DrawModelEx(m_truckModel, m_position, {1.f, 0.f, 0.f}, m_truckRoll, {1.f, 1.f, 1.f}, WHITE);
+    DrawModelEx(m_truckModel, this->GetPosition(), {1.f, 0.f, 0.f}, m_truckRoll, this->GetScale(), WHITE);
 }

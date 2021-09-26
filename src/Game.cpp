@@ -26,10 +26,15 @@ Game::Game() : m_assetManager(std::make_unique<AssetManager>())
     m_assetManager->Load(AssetId::House, "resources/models/houses/house_type04.gltf");
     m_assetManager->Load(AssetId::TreeSmall, "resources/models/trees/treeSmall.gltf");
 
-    m_entities.push_back(std::make_unique<Road>());
+    m_entities.push_back(std::make_unique<Road>(Vector3{200.f,
+                                                        0.f,
+                                                        0.f}));
     m_entities.push_back(std::make_unique<PizzaTruck>(*m_assetManager, Vector3{0.0f, 0.0f, 0.0f}));
-    m_entities.push_back(std::make_unique<House>(*m_assetManager, Vector3{500.0f, 0.0f, -15.0f}));
-    m_entities.push_back(std::make_unique<TreeSmall>(*m_assetManager, Vector3{400.0f, 0.0f, -15.0f}));
+    m_entities.push_back(std::make_unique<House>(*m_assetManager, Vector3{500.0f, 0.0f, -15.0f}, Vector3{20.f, 20.f, 20.f}));
+    m_entities.push_back(std::make_unique<TreeSmall>(*m_assetManager, Vector3{400.0f, 0.0f, -25.0f}, Vector3{20.f, 20.f, 20.f}));
+    m_entities.push_back(std::make_unique<TreeSmall>(*m_assetManager, Vector3{420.0f, 0.0f, -25.0f}, Vector3{20.f, 20.f, 20.f}));
+    m_entities.push_back(std::make_unique<TreeSmall>(*m_assetManager, Vector3{450.0f, 0.0f, -30.0f}, Vector3{20.f, 20.f, 20.f}));
+    m_entities.push_back(std::make_unique<TreeSmall>(*m_assetManager, Vector3{400.0f, 0.0f, -16.0f}, Vector3{20.f, 20.f, 20.f}));
 }
 
 Game::~Game()
@@ -39,17 +44,20 @@ Game::~Game()
 
 void Game::Run()
 {
+    float deltaTime = 0.f;
+
     while (!WindowShouldClose())
     {
+        deltaTime += GetFrameTime();
         UpdateCamera(&m_camera);
 
-        this->ProcessInputs();
-
-        auto deltaTime = GetFrameTime();
-
+        // The deltaTime between window init and first frame is generally huge.
+        // This happens because loading assets takes time.
         while (deltaTime > (1 / 60.f))
         {
             deltaTime -= 1 / 60.f;
+
+            this->ProcessInputs();
             this->Update(1 / 60.f);
         }
 
