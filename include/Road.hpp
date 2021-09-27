@@ -15,7 +15,7 @@ class Road : public Entity,
              public IDrawable
 {
 public:
-    Road(const Vector3& position);
+    Road(const Vector3 &position);
     void Update(float deltaTime) override final;
     void Draw() const override final;
 

@@ -3,6 +3,7 @@
 #include "Entity.hpp"
 #include "Transformable.hpp"
 #include "IDrawable.hpp"
+#include "ICollidable.hpp"
 #include "AssetManager.hpp"
 
 #include "raylib.h"
@@ -12,13 +13,15 @@ enum class VehicleType
     Car
 };
 
-class Vehicle : public Entity, public Transformable, public IDrawable
+class Vehicle : public Entity, public Transformable, public IDrawable, public ICollidable
 {
 public:
     Vehicle(const AssetManager &assetManager, VehicleType vehicleType, const Vector3 &position, const Vector3 &scale);
 
     void Update(float deltaTime) override final;
     void Draw() const override final;
+
+    const BoundingBox &GetCollisionBox() const override final;
 
 private:
     Model m_model = {};

@@ -13,11 +13,11 @@ Game::Game() : m_assetManager(std::make_unique<AssetManager>())
 {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, TITLE);
 
-    m_camera.position = {-25.f, 18.0f, 25.0f}; // Camera position
-    m_camera.target = {6.0f, 0.0f, 0.0f};      // Camera looking at point
-    m_camera.up = {0.0f, 1.0f, 0.0f};          // Camera up vector (rotation towards target)
-    m_camera.fovy = 45.0f;                     // Camera field-of-view Y
-    m_camera.projection = CAMERA_PERSPECTIVE;  // Camera mode type
+    m_camera.position = m_initialCameraPosition; // Camera position
+    m_camera.target = {6.0f, 0.0f, 0.0f};        // Camera looking at point
+    m_camera.up = {0.0f, 1.0f, 0.0f};            // Camera up vector (rotation towards target)
+    m_camera.fovy = 45.0f;                       // Camera field-of-view Y
+    m_camera.projection = CAMERA_PERSPECTIVE;    // Camera mode type
 
     SetCameraMode(m_camera, CAMERA_FREE);
     SetTargetFPS(60);
@@ -86,11 +86,54 @@ void Game::ProcessInputs()
 
 void Game::Update(float deltaTime)
 {
-    if(!m_isPaused)
+    if (!m_isPaused)
     {
+        if (m_cameraShakeTimer > 0.f)
+        {
+            m_cameraShakeTimer -= deltaTime;
+        }
+        else
+        {
+            m_isCameraShaking = false;
+            m_camera.position = m_initialCameraPosition;
+        }
+
+        std::vector<ICollidable *> m_collidables;
+
         for (const auto &entity : m_entities)
         {
             entity->Update(deltaTime);
+
+            auto collidable = dynamic_cast<ICollidable *>(entity.get());
+            if (collidable)
+            {
+                m_collidables.push_back(collidable);
+            }
+        }
+
+        for (auto entityA : m_collidables)
+        {
+            for (auto entityB : m_collidables)
+            {
+                if (entityA != entityB)
+                {
+                    if (CheckCollisionBoxes(entityA->GetCollisionBox(), entityB->GetCollisionBox()))
+                    {
+                        entityA->OnCollision(*entityB);
+                        entityB->OnCollision(*entityA);
+
+                        m_isCameraShaking = true;
+                        m_cameraShakeTimer = 0.5f;
+                    }
+                }
+            }
+        }
+
+        if (m_isCameraShaking)
+        {
+            m_camera.position.x += GetRandomValue(-1, 1);
+            m_camera.position.y += GetRandomValue(-1, 1);
+            m_camera.position.z += GetRandomValue(-1, 1);
         }
     }
 }

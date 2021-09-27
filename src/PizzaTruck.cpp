@@ -72,3 +72,8 @@ void PizzaTruck::Draw() const
     DrawBoundingBox(m_collisionBox, BLACK);
 #endif
 }
+
+const BoundingBox &PizzaTruck::GetCollisionBox() const
+{
+    return m_collisionBox;
+}

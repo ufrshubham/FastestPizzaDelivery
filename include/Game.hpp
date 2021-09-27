@@ -34,8 +34,11 @@ private:
 
     float m_worldSpeed = 10.f;
 
+    bool m_isCameraShaking = false;
+    float m_cameraShakeTimer = 0.f;
+
     Camera3D m_camera = {};
-    Vector3 m_roadStripPosition = {40.f, 0.01f, 0.f};
+    const Vector3 m_initialCameraPosition = {-25.f, 18.0f, 25.0f};
 
     std::unique_ptr<AssetManager> m_assetManager;
     std::vector<std::unique_ptr<Entity>> m_entities;

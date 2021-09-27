@@ -3,13 +3,14 @@
 #include "Entity.hpp"
 #include "Transformable.hpp"
 #include "IDrawable.hpp"
+#include "ICollidable.hpp"
 
 #include "raylib.h"
 
 class AssetManager;
 
 // This class represents the PizzaTrick in game world.
-class PizzaTruck : public Entity, public Transformable, public IDrawable
+class PizzaTruck : public Entity, public Transformable, public IDrawable, public ICollidable
 {
 public:
     PizzaTruck(const AssetManager &assetManager, const Vector3 &position);
@@ -17,6 +18,8 @@ public:
     void ProcessInputs() override final;
     void Update(float deltaTime) override final;
     void Draw() const override final;
+
+    const BoundingBox &GetCollisionBox() const override final;
 
 private:
     Model m_truckModel = {};

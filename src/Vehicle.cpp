@@ -14,9 +14,6 @@ Vehicle::Vehicle(const AssetManager &assetManager, VehicleType vehicleType, cons
     m_initialPosition.x = 500.0f;
     m_model = assetManager.Get(typeToAssetId.at(vehicleType));
 
-    auto rotMatrix = MatrixRotateY(-PI / 2);
-    m_model.transform = MatrixMultiply(rotMatrix, m_model.transform);
-
     Vector3 boundingBoxMax = {};
     Vector3 boundingBoxMin = {std::numeric_limits<float>::max(), std::numeric_limits<float>::max(), std::numeric_limits<float>::max()};
 
@@ -29,10 +26,7 @@ Vehicle::Vehicle(const AssetManager &assetManager, VehicleType vehicleType, cons
         boundingBoxMin = Vector3Min(boundingBox.min, boundingBoxMin);
     }
 
-    // Todo: Fix position of collision box.
-    auto rotQuat = QuaternionFromMatrix(MatrixRotateY(-PI / 2));
-    m_boundingBox = {Vector3RotateByQuaternion(boundingBoxMin, rotQuat), Vector3RotateByQuaternion(boundingBoxMax, rotQuat)};
-    m_boundingBox = {Vector3Scale(m_boundingBox.min, scale.x), Vector3Scale(m_boundingBox.max, scale.x)};
+    m_boundingBox = {Vector3Scale(boundingBoxMin, scale.x), Vector3Scale(boundingBoxMax, scale.x)};
     m_collisionBox = m_boundingBox;
 }
 
@@ -55,4 +49,9 @@ void Vehicle::Draw() const
 #ifdef SHOW_COLLISION_BOXES
     DrawBoundingBox(m_collisionBox, BLACK);
 #endif
+}
+
+const BoundingBox &Vehicle::GetCollisionBox() const
+{
+    return m_collisionBox;
 }
