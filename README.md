@@ -39,15 +39,15 @@ Play "Fastest Pizza Delivery" and see much money you can make!
 git clone --recursive https://github.com/ufrshubham/FastestPizzaDelivery.git
 
 # If the repository was already cloned without submodules, use
-$ git submodule update --init
+git submodule update --init
 
 # Enter project directory
-$ cd FastestPizzaDelivery
+cd FastestPizzaDelivery
 
 # Generate projects files
-$ mkdir build
-$ cd build
-$ cmake ..
+mkdir build
+cd build
+cmake ..
 ```
 
 ---

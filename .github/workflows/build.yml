@@ -38,8 +38,9 @@ jobs:
       - name: Upload artifacts
         uses: 'actions/upload-artifact@v2'
         with:
-            name: FastestPizzaDelivery ${{ matrix.os }}
+            name: FastestPizzaDelivery-${{ matrix.os }}
             path: |
               ${{ github.workspace }}/build/bin/FastestPizzaDelivery
               ${{ github.workspace }}/build/bin/Release/FastestPizzaDelivery.exe
+              ${{ github.workspace }}/resources
             retention-days: 2

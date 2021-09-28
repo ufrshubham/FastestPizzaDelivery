@@ -38,7 +38,7 @@ private:
     float m_cameraShakeTimer = 0.f;
 
     Camera3D m_camera = {};
-    const Vector3 m_initialCameraPosition = {-25.f, 18.0f, 25.0f};
+    const Vector3 m_initialTargetPosition = {6.0f, 0.0f, 0.0f};
 
     std::unique_ptr<AssetManager> m_assetManager;
     std::vector<std::unique_ptr<Entity>> m_entities;
