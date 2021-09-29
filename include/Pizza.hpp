@@ -11,10 +11,11 @@ class AssetManager;
 class Pizza : public Entity, public Transformable, public IDrawable
 {
 public:
-    Pizza(const AssetManager &assetManager, const Vector3 &target);
+    Pizza(const AssetManager &assetManager, const Vector3 &position, const Vector3 &target);
 
     void Update(float deltaTime) override final;
     void Draw() const override final;
+    bool ShouldDestroy() const override final;
 
 private:
     Model m_pizzaModel = {};

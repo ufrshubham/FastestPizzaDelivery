@@ -7,6 +7,7 @@
 
 class Entity;
 class AssetManager;
+class Transformable;
 
 // This is the main game class which start the game.
 class Game
@@ -42,6 +43,7 @@ private:
 
     std::unique_ptr<AssetManager> m_assetManager;
     std::forward_list<std::unique_ptr<Entity>> m_entities;
+    Transformable *m_pizzaTruck = nullptr;
 
     bool m_isPaused = false;
 };

@@ -31,7 +31,11 @@ Game::Game() : m_assetManager(std::make_unique<AssetManager>())
     m_entities.push_front(std::make_unique<Road>(Vector3{300.f,
                                                          0.f,
                                                          0.f}));
-    m_entities.push_front(std::make_unique<PizzaTruck>(*m_assetManager, Vector3{0.0f, 0.0f, 0.0f}));
+
+    auto ptr = std::make_unique<PizzaTruck>(*m_assetManager, Vector3{0.0f, 0.0f, 0.0f});
+    m_pizzaTruck = ptr.get();
+
+    m_entities.push_front(std::move(ptr));
     m_entities.push_front(std::make_unique<House>(*m_assetManager, Vector3{600.0f, 0.0f, -15.0f}, Vector3{20.f, 20.f, 20.f}));
 
     m_entities.push_front(std::make_unique<TreeSmall>(*m_assetManager, Vector3{500.0f, 0.0f, -25.0f}, Vector3{20.f, 20.f, 20.f}));
@@ -76,31 +80,32 @@ void Game::ProcessInputs()
         m_isPaused = !m_isPaused;
     }
 
-    Ray ray = GetMouseRay(GetMousePosition(), m_camera);
-    auto hitInfo = GetCollisionRayGround(ray, 1.f);
+    Ray ray = {};
+    ray = GetMouseRay(GetMousePosition(), m_camera);
+    auto hitInfo = GetCollisionRayGround(ray, 0.f);
     Vector3 aimPosition = hitInfo.position;
 
+    // Probably not a good idea to loop over all the entities here.
     for (const auto &entity : m_entities)
     {
         entity->ProcessInputs();
 
-        if (!hitInfo.hit)
+        auto collidable = dynamic_cast<ICollidable *>(entity.get());
+        if (collidable)
         {
-            auto collidable = dynamic_cast<ICollidable *>(entity.get());
-            if (collidable)
+            if (CheckCollisionRayBox(ray, collidable->GetCollisionBox()))
             {
-                if (CheckCollisionRayBox(ray, collidable->GetCollisionBox()))
-                {
-                    auto transformable = dynamic_cast<Transformable *>(entity.get());
-                    aimPosition = transformable->GetPosition();
-                }
+                auto transformable = dynamic_cast<Transformable *>(entity.get());
+                aimPosition = transformable->GetPosition();
             }
         }
     }
 
     if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
     {
-        m_entities.push_front(std::make_unique<Pizza>(*m_assetManager, aimPosition));
+        auto position = m_pizzaTruck->GetPosition();
+        position.y += 10.f;
+        m_entities.push_front(std::make_unique<Pizza>(*m_assetManager, position, aimPosition));
     }
 }
 
@@ -120,7 +125,7 @@ void Game::Update(float deltaTime)
             m_camera.target = m_initialTargetPosition;
         }
 
-        std::forward_list<ICollidable *> m_collidables;
+        std::forward_list<ICollidable *> collidables;
 
         for (const auto &entity : m_entities)
         {
@@ -129,13 +134,13 @@ void Game::Update(float deltaTime)
             auto collidable = dynamic_cast<ICollidable *>(entity.get());
             if (collidable)
             {
-                m_collidables.push_front(collidable);
+                collidables.push_front(collidable);
             }
         }
 
-        for (auto entityA : m_collidables)
+        for (auto entityA : collidables)
         {
-            for (auto entityB : m_collidables)
+            for (auto entityB : collidables)
             {
                 if (entityA != entityB)
                 {
@@ -150,6 +155,9 @@ void Game::Update(float deltaTime)
                 }
             }
         }
+
+        m_entities.remove_if([](const auto &entity)
+                             { return entity->ShouldDestroy(); });
 
         if (m_isCameraShaking)
         {
