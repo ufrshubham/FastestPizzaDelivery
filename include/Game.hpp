@@ -2,7 +2,7 @@
 
 #include "raylib.h"
 
-#include <vector>
+#include <forward_list>
 #include <memory>
 
 class Entity;
@@ -41,7 +41,7 @@ private:
     const Vector3 m_initialTargetPosition = {6.0f, 0.0f, 0.0f};
 
     std::unique_ptr<AssetManager> m_assetManager;
-    std::vector<std::unique_ptr<Entity>> m_entities;
+    std::forward_list<std::unique_ptr<Entity>> m_entities;
 
     bool m_isPaused = false;
 };

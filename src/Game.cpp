@@ -28,18 +28,18 @@ Game::Game() : m_assetManager(std::make_unique<AssetManager>())
     m_assetManager->Load(AssetId::TreeSmall, "resources/models/trees/treeSmall.gltf");
     m_assetManager->Load(AssetId::Car, "resources/models/vehicles/low-poly_car/car.gltf");
 
-    m_entities.push_back(std::make_unique<Road>(Vector3{300.f,
-                                                        0.f,
-                                                        0.f}));
-    m_entities.push_back(std::make_unique<PizzaTruck>(*m_assetManager, Vector3{0.0f, 0.0f, 0.0f}));
-    m_entities.push_back(std::make_unique<House>(*m_assetManager, Vector3{600.0f, 0.0f, -15.0f}, Vector3{20.f, 20.f, 20.f}));
+    m_entities.push_front(std::make_unique<Road>(Vector3{300.f,
+                                                         0.f,
+                                                         0.f}));
+    m_entities.push_front(std::make_unique<PizzaTruck>(*m_assetManager, Vector3{0.0f, 0.0f, 0.0f}));
+    m_entities.push_front(std::make_unique<House>(*m_assetManager, Vector3{600.0f, 0.0f, -15.0f}, Vector3{20.f, 20.f, 20.f}));
 
-    m_entities.push_back(std::make_unique<TreeSmall>(*m_assetManager, Vector3{500.0f, 0.0f, -25.0f}, Vector3{20.f, 20.f, 20.f}));
-    m_entities.push_back(std::make_unique<TreeSmall>(*m_assetManager, Vector3{520.0f, 0.0f, -25.0f}, Vector3{20.f, 20.f, 20.f}));
-    m_entities.push_back(std::make_unique<TreeSmall>(*m_assetManager, Vector3{550.0f, 0.0f, -30.0f}, Vector3{20.f, 20.f, 20.f}));
-    m_entities.push_back(std::make_unique<TreeSmall>(*m_assetManager, Vector3{500.0f, 0.0f, -16.0f}, Vector3{20.f, 20.f, 20.f}));
+    m_entities.push_front(std::make_unique<TreeSmall>(*m_assetManager, Vector3{500.0f, 0.0f, -25.0f}, Vector3{20.f, 20.f, 20.f}));
+    m_entities.push_front(std::make_unique<TreeSmall>(*m_assetManager, Vector3{520.0f, 0.0f, -25.0f}, Vector3{20.f, 20.f, 20.f}));
+    m_entities.push_front(std::make_unique<TreeSmall>(*m_assetManager, Vector3{550.0f, 0.0f, -30.0f}, Vector3{20.f, 20.f, 20.f}));
+    m_entities.push_front(std::make_unique<TreeSmall>(*m_assetManager, Vector3{500.0f, 0.0f, -16.0f}, Vector3{20.f, 20.f, 20.f}));
 
-    m_entities.push_back(std::make_unique<Vehicle>(*m_assetManager, VehicleType::Car, Vector3{0.0f, 0.0f, 10.0f}, Vector3{3.f, 3.f, 3.f}));
+    m_entities.push_front(std::make_unique<Vehicle>(*m_assetManager, VehicleType::Car, Vector3{0.0f, 0.0f, 10.0f}, Vector3{3.f, 3.f, 3.f}));
 }
 
 Game::~Game()
@@ -100,7 +100,7 @@ void Game::ProcessInputs()
 
     if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
     {
-        m_entities.push_back(std::make_unique<Pizza>(*m_assetManager, aimPosition));
+        m_entities.push_front(std::make_unique<Pizza>(*m_assetManager, aimPosition));
     }
 }
 
@@ -120,7 +120,7 @@ void Game::Update(float deltaTime)
             m_camera.target = m_initialTargetPosition;
         }
 
-        std::vector<ICollidable *> m_collidables;
+        std::forward_list<ICollidable *> m_collidables;
 
         for (const auto &entity : m_entities)
         {
@@ -129,7 +129,7 @@ void Game::Update(float deltaTime)
             auto collidable = dynamic_cast<ICollidable *>(entity.get());
             if (collidable)
             {
-                m_collidables.push_back(collidable);
+                m_collidables.push_front(collidable);
             }
         }
 
