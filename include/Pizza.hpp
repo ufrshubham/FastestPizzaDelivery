@@ -21,4 +21,6 @@ private:
     Model m_pizzaModel = {};
     Vector3 m_velocity = {0.f, 0.f, 0.f};
     Vector3 m_target = {0.f, 0.f, 0.f};
+    Vector3 m_rotationAxis = {0.f, 0.f, 0.f};
+    float m_rotation = 0.f;
 };
