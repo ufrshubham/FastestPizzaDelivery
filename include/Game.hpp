@@ -32,6 +32,7 @@ private:
     const int SCREEN_WIDTH = 1920 / 2;
     const int SCREEN_HEIGHT = 1080 / 2;
     const char *TITLE = "Fastest Pizza Delivery : Engine Less Jam";
+    const float TIME_PER_FRAME = 1.f / 60.f;
 
     float m_worldSpeed = 10.f;
 

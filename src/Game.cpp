@@ -14,7 +14,7 @@ Game::Game() : m_assetManager(std::make_unique<AssetManager>())
 {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, TITLE);
 
-    m_camera.position = {-25.f, 18.0f, 25.0f}; // Camera position
+    m_camera.position = {-25.f, 18.0f, 25.0f}; // Camera position. Alt-position {-30.f, 16.0f, 0.0f}
     m_camera.target = m_initialTargetPosition; // Camera looking at point
     m_camera.up = {0.0f, 1.0f, 0.0f};          // Camera up vector (rotation towards target)
     m_camera.fovy = 45.0f;                     // Camera field-of-view Y
@@ -62,12 +62,12 @@ void Game::Run()
 
         // The deltaTime between window init and first frame is generally huge.
         // This happens because loading assets takes time.
-        while (deltaTime > (1 / 60.f))
+        while (deltaTime > TIME_PER_FRAME)
         {
-            deltaTime -= 1 / 60.f;
+            deltaTime -= TIME_PER_FRAME;
 
             this->ProcessInputs();
-            this->Update(1 / 60.f);
+            this->Update(TIME_PER_FRAME);
         }
 
         this->Draw();
@@ -121,7 +121,7 @@ void Game::Update(float deltaTime)
         {
             m_cameraShakeTimer -= deltaTime;
         }
-        else
+        else if (m_isCameraShaking)
         {
             m_isCameraShaking = false;
             m_camera.target = m_initialTargetPosition;
