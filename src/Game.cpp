@@ -6,6 +6,7 @@
 #include "House.hpp"
 #include "Tree.hpp"
 #include "Vehicle.hpp"
+#include "CollisionLayer.hpp"
 
 #include "raylib.h"
 
@@ -75,6 +76,8 @@ void Game::Run()
 
 void Game::ProcessInputs()
 {
+    static const auto clickLayers = CollisionLayer::BuildingLayer | CollisionLayer::VehicleLayer;
+
     if (IsKeyPressed(KEY_P))
     {
         m_isPaused = !m_isPaused;
@@ -85,13 +88,12 @@ void Game::ProcessInputs()
     auto hitInfo = GetCollisionRayGround(ray, 0.f);
     Vector3 aimPosition = hitInfo.position;
 
-    // Probably not a good idea to loop over all the entities here.
     for (const auto &entity : m_entities)
     {
         entity->ProcessInputs();
 
         auto collidable = dynamic_cast<ICollidable *>(entity.get());
-        if (collidable)
+        if (collidable && (collidable->GetCollisionLayers() & clickLayers))
         {
             if (CheckCollisionRayBox(ray, collidable->GetCollisionBox()))
             {
@@ -105,7 +107,7 @@ void Game::ProcessInputs()
     {
         auto position = m_pizzaTruck->GetPosition();
         position.y += 10.f;
-        m_entities.push_front(std::make_unique<Pizza>(*m_assetManager, position, aimPosition));
+        m_entities.push_front(std::make_unique<Pizza>(*m_assetManager, position, Vector3{0.5f, 0.5f, 0.5f}, aimPosition));
     }
 }
 
@@ -144,15 +146,20 @@ void Game::Update(float deltaTime)
             {
                 if (entityA != entityB)
                 {
-                    if ((entityA->GetCollidableLayers() & entityB->GetCollisionLayers()) != 0)
+                    if (entityA->GetCollidableLayers() & entityB->GetCollisionLayers())
                     {
                         if (CheckCollisionBoxes(entityA->GetCollisionBox(), entityB->GetCollisionBox()))
                         {
                             entityA->OnCollision(*entityB);
                             entityB->OnCollision(*entityA);
 
-                            m_isCameraShaking = true;
-                            m_cameraShakeTimer = 0.5f;
+                            // Either of them must be Truck to make the camera shake.
+                            if ((entityA->GetCollisionLayers() & CollisionLayer::PizzaTruckLayer) ||
+                                (entityB->GetCollisionLayers() & CollisionLayer::PizzaTruckLayer))
+                            {
+                                m_isCameraShaking = true;
+                                m_cameraShakeTimer = 0.5f;
+                            }
                         }
                     }
                 }

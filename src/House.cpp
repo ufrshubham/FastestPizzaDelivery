@@ -44,10 +44,9 @@ void House::Update(float deltaTime)
 void House::Draw() const
 {
     DrawModelEx(m_houseModel, this->GetPosition(), {1.f, 0.f, 0.f}, 0.f, this->GetScale(), WHITE);
-    if (m_isSelected)
-    {
-        DrawBoundingBox(m_collisionBox, GREEN);
-    }
+#ifdef SHOW_COLLISION_BOXES
+    DrawBoundingBox(m_collisionBox, BLACK);
+#endif
 }
 
 const BoundingBox &House::GetCollisionBox() const

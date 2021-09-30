@@ -28,10 +28,9 @@ private:
 
     // Todo: Does not belong here. Better to extract it out as world speed.
     float m_speed = 80.f;
+
     BoundingBox m_boundingBox = {};
     BoundingBox m_collisionBox = {};
-
-    bool m_isSelected = false;
 
     Vector3 m_initialPosition = {0.f, 0.f, 0.f};
 };
