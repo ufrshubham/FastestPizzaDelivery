@@ -1,5 +1,6 @@
 #include "House.hpp"
 #include "AssetManager.hpp"
+#include "CollisionLayer.hpp"
 
 #include "raymath.h"
 
@@ -52,4 +53,14 @@ void House::Draw() const
 const BoundingBox &House::GetCollisionBox() const
 {
     return m_collisionBox;
+}
+
+unsigned int House::GetCollisionLayers() const
+{
+    return CollisionLayer::BuildingLayer;
+}
+
+unsigned int House::GetCollidableLayers() const
+{
+    return CollisionLayer::PizzaLayer;
 }

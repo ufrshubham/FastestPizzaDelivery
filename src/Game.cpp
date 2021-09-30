@@ -144,13 +144,16 @@ void Game::Update(float deltaTime)
             {
                 if (entityA != entityB)
                 {
-                    if (CheckCollisionBoxes(entityA->GetCollisionBox(), entityB->GetCollisionBox()))
+                    if ((entityA->GetCollidableLayers() & entityB->GetCollisionLayers()) != 0)
                     {
-                        entityA->OnCollision(*entityB);
-                        entityB->OnCollision(*entityA);
+                        if (CheckCollisionBoxes(entityA->GetCollisionBox(), entityB->GetCollisionBox()))
+                        {
+                            entityA->OnCollision(*entityB);
+                            entityB->OnCollision(*entityA);
 
-                        m_isCameraShaking = true;
-                        m_cameraShakeTimer = 0.5f;
+                            m_isCameraShaking = true;
+                            m_cameraShakeTimer = 0.5f;
+                        }
                     }
                 }
             }

@@ -1,4 +1,5 @@
 #include "Vehicle.hpp"
+#include "CollisionLayer.hpp"
 
 #include "raymath.h"
 
@@ -54,4 +55,14 @@ void Vehicle::Draw() const
 const BoundingBox &Vehicle::GetCollisionBox() const
 {
     return m_collisionBox;
+}
+
+unsigned int Vehicle::GetCollisionLayers() const
+{
+    return CollisionLayer::VehicleLayer;
+}
+
+unsigned int Vehicle::GetCollidableLayers() const
+{
+    return CollisionLayer::PizzaLayer | CollisionLayer::PizzaTruckLayer;
 }

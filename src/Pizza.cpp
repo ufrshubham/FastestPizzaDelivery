@@ -36,7 +36,7 @@ void Pizza::Draw() const
 bool Pizza::ShouldDestroy() const
 {
     auto pos = this->GetPosition();
-    // While traveling along +z(right of truck) sometimes y keeps on increasing.
-    // This is a hack for such cases.
-    return ((pos.y < 0.f) || (pos.y > 50.f));
+    auto lengthSq = Vector3LengthSqr(pos);
+
+    return ((pos.y < 0.f) || (lengthSq > 50000));
 }

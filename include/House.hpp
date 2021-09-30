@@ -20,6 +20,9 @@ public:
 
     const BoundingBox &GetCollisionBox() const;
 
+    unsigned int GetCollisionLayers() const override final;
+    unsigned int GetCollidableLayers() const override final;
+
 private:
     Model m_houseModel = {};
 

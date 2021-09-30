@@ -1,5 +1,6 @@
 #include "PizzaTruck.hpp"
 #include "AssetManager.hpp"
+#include "CollisionLayer.hpp"
 
 #include "raymath.h"
 #include <limits>
@@ -76,4 +77,14 @@ void PizzaTruck::Draw() const
 const BoundingBox &PizzaTruck::GetCollisionBox() const
 {
     return m_collisionBox;
+}
+
+unsigned int PizzaTruck::GetCollisionLayers() const
+{
+    return CollisionLayer::PizzaTruckLayer;
+}
+
+unsigned int PizzaTruck::GetCollidableLayers() const
+{
+    return CollisionLayer::VehicleLayer;
 }

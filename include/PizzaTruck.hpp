@@ -21,6 +21,9 @@ public:
 
     const BoundingBox &GetCollisionBox() const override final;
 
+    unsigned int GetCollisionLayers() const override final;
+    unsigned int GetCollidableLayers() const override final;
+
 private:
     Model m_truckModel = {};
     BoundingBox m_boundingBox = {};
