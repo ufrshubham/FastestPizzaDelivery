@@ -1,5 +1,6 @@
 #include "Vehicle.hpp"
 #include "CollisionLayer.hpp"
+#include "Pizza.hpp"
 
 #include "raymath.h"
 
@@ -7,8 +8,9 @@
 
 Vehicle::Vehicle(const AssetManager &assetManager, VehicleType vehicleType, const Vector3 &position, const Vector3 &scale) : m_initialPosition(position)
 {
-    static const std::unordered_map<VehicleType, AssetId> typeToAssetId{{VehicleType::Car, AssetId::Car}};
+    m_wantsPizza = true;
 
+    static const std::unordered_map<VehicleType, AssetId> typeToAssetId{{VehicleType::Car, AssetId::Car}};
     this->SetPosition(position);
     this->SetScale(scale);
     // Todo: Need to improve this.
@@ -46,6 +48,12 @@ void Vehicle::Update(float deltaTime)
 
 void Vehicle::Draw() const
 {
+    if (this->WantsPizza())
+    {
+        auto markerPos = Vector3Add(this->GetPosition(), {0.f, 5.f, 0.f});
+        DrawCylinder(markerPos, 2.f, 0.f, 3.0f, 8, BLACK);
+    }
+
     DrawModelEx(m_model, this->GetPosition(), {0.f, 0.f, 0.f}, 0.f, this->GetScale(), WHITE);
 #ifdef SHOW_COLLISION_BOXES
     DrawBoundingBox(m_collisionBox, BLACK);
@@ -57,6 +65,15 @@ const BoundingBox &Vehicle::GetCollisionBox() const
     return m_collisionBox;
 }
 
+void Vehicle::OnCollision(const ICollidable &otherCollidable)
+{
+    auto *ptr = &otherCollidable;
+    if (dynamic_cast<const Pizza *>(ptr))
+    {
+        m_wantsPizza = false;
+    }
+}
+
 unsigned int Vehicle::GetCollisionLayers() const
 {
     return CollisionLayer::VehicleLayer;
@@ -65,4 +82,9 @@ unsigned int Vehicle::GetCollisionLayers() const
 unsigned int Vehicle::GetCollidableLayers() const
 {
     return CollisionLayer::PizzaLayer | CollisionLayer::PizzaTruckLayer;
+}
+
+bool Vehicle::WantsPizza() const
+{
+    return m_wantsPizza;
 }

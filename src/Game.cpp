@@ -7,14 +7,18 @@
 #include "Tree.hpp"
 #include "Vehicle.hpp"
 #include "CollisionLayer.hpp"
+#include "IPizzaConsumer.hpp"
 
 #include "raylib.h"
+
+#include <sstream>
 
 Game::Game() : m_assetManager(std::make_unique<AssetManager>())
 {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, TITLE);
+    //SetWindowState(FLAG_FULLSCREEN_MODE);
 
-    m_camera.position = {-25.f, 18.0f, 25.0f}; // Camera position. Alt-position {-30.f, 16.0f, 0.0f}
+    m_camera.position = {-30.f, 16.0f, 0.0f};  // {-25.f, 18.0f, 25.0f}; // Camera position. Alt-position {-30.f, 16.0f, 0.0f}
     m_camera.target = m_initialTargetPosition; // Camera looking at point
     m_camera.up = {0.0f, 1.0f, 0.0f};          // Camera up vector (rotation towards target)
     m_camera.fovy = 45.0f;                     // Camera field-of-view Y
@@ -133,6 +137,7 @@ void Game::Update(float deltaTime)
         {
             entity->Update(deltaTime);
 
+            // Collect all the collidable entities.
             auto collidable = dynamic_cast<ICollidable *>(entity.get());
             if (collidable)
             {
@@ -140,40 +145,16 @@ void Game::Update(float deltaTime)
             }
         }
 
-        for (auto entityA : collidables)
-        {
-            for (auto entityB : collidables)
-            {
-                if (entityA != entityB)
-                {
-                    if (entityA->GetCollidableLayers() & entityB->GetCollisionLayers())
-                    {
-                        if (CheckCollisionBoxes(entityA->GetCollisionBox(), entityB->GetCollisionBox()))
-                        {
-                            entityA->OnCollision(*entityB);
-                            entityB->OnCollision(*entityA);
+        // Perform collision detection.
+        this->CheckCollisions(collidables);
 
-                            // Either of them must be Truck to make the camera shake.
-                            if ((entityA->GetCollisionLayers() & CollisionLayer::PizzaTruckLayer) ||
-                                (entityB->GetCollisionLayers() & CollisionLayer::PizzaTruckLayer))
-                            {
-                                m_isCameraShaking = true;
-                                m_cameraShakeTimer = 0.5f;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
+        // Remove any entity that is marked for deletion.
         m_entities.remove_if([](const auto &entity)
                              { return entity->ShouldDestroy(); });
 
         if (m_isCameraShaking)
         {
-            m_camera.target.x += GetRandomValue(-1, 1) * 0.3f;
             m_camera.target.y += GetRandomValue(-1, 1) * 0.3f;
-            m_camera.target.z += GetRandomValue(-1, 1) * 0.3f;
         }
     }
 }
@@ -194,5 +175,62 @@ void Game::Draw() const
     }
 
     EndMode3D();
+
+    std::stringstream ss;
+    ss << "Score: " << m_score;
+    DrawText(ss.str().c_str(), 32, 32, 30, RAYWHITE);
+
     EndDrawing();
+}
+
+void Game::CheckCollisions(const std::forward_list<ICollidable *> &collidables)
+{
+    for (auto entityA : collidables)
+    {
+        for (auto entityB : collidables)
+        {
+            if (entityA != entityB)
+            {
+                if (entityA->GetCollidableLayers() & entityB->GetCollisionLayers())
+                {
+                    if (CheckCollisionBoxes(entityA->GetCollisionBox(), entityB->GetCollisionBox()))
+                    {
+                        bool wantsPizza = false;
+
+                        if (entityA->GetCollisionLayers() & CollisionLayer::PizzaTruckLayer)
+                        {
+                            m_isCameraShaking = true;
+                            m_cameraShakeTimer = 0.5f;
+                        }
+                        else if (entityA->GetCollisionLayers() & CollisionLayer::PizzaLayer)
+                        {
+                            auto pizzaConsumer = dynamic_cast<IPizzaConsumer *>(entityA);
+                            wantsPizza = pizzaConsumer && pizzaConsumer->WantsPizza();
+                        }
+                        else if (entityB->GetCollisionLayers() & CollisionLayer::PizzaLayer)
+                        {
+                            auto pizzaConsumer = dynamic_cast<IPizzaConsumer *>(entityB);
+                            wantsPizza = pizzaConsumer && pizzaConsumer->WantsPizza();
+                        }
+
+                        // TODO: Need to move such logic to entities. To modify game state
+                        // some kind of command system of back ref to Game can be added.
+                        if (wantsPizza)
+                        {
+                            // Player should get paid only if pizza is delivered
+                            // to an entity that actually wants pizza.
+                            m_score += 10;
+                        }
+                        else
+                        {
+                            // We just gave up a free pizza
+                            m_score -= 10;
+                        }
+
+                        entityA->OnCollision(*entityB);
+                    }
+                }
+            }
+        }
+    }
 }

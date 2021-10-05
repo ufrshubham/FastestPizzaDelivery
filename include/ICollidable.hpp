@@ -6,10 +6,10 @@
 class ICollidable
 {
 public:
-    virtual ~ICollidable(){};
+    virtual ~ICollidable() {}
 
     virtual const BoundingBox &GetCollisionBox() const = 0;
-    virtual void OnCollision(const ICollidable &otherCollidable){};
+    virtual void OnCollision(const ICollidable &otherCollidable) {}
 
     virtual unsigned int GetCollisionLayers() const = 0;
     virtual unsigned int GetCollidableLayers() const = 0;

@@ -8,6 +8,7 @@
 class Entity;
 class AssetManager;
 class Transformable;
+class ICollidable;
 
 // This is the main game class which start the game.
 class Game
@@ -28,6 +29,9 @@ private:
     // Draws everything on the game window.
     void Draw() const;
 
+    // Checks for collision between given list of collidables.
+    void CheckCollisions(const std::forward_list<ICollidable *> &collidables);
+
 private:
     const int SCREEN_WIDTH = 1920 / 2;
     const int SCREEN_HEIGHT = 1080 / 2;
@@ -40,11 +44,12 @@ private:
     float m_cameraShakeTimer = 0.f;
 
     Camera3D m_camera = {};
-    const Vector3 m_initialTargetPosition = {6.0f, 0.0f, 0.0f};
+    const Vector3 m_initialTargetPosition = {6.0f, 2.0f, 0.0f};
 
     std::unique_ptr<AssetManager> m_assetManager;
     std::forward_list<std::unique_ptr<Entity>> m_entities;
     Transformable *m_pizzaTruck = nullptr;
 
     bool m_isPaused = false;
+    int m_score = 0;
 };

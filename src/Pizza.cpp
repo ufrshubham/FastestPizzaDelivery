@@ -28,6 +28,8 @@ Pizza::Pizza(const AssetManager &assetManager, const Vector3 &position, const Ve
     }
 
     m_boundingBox = {Vector3Scale(boundingBoxMin, scale.x), Vector3Scale(boundingBoxMax, scale.x)};
+    m_boundingBox.max.y += 1.f;
+    m_boundingBox.min.y -= 2.f;
     m_collisionBox = m_boundingBox;
 }
 
