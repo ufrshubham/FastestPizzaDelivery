@@ -1,6 +1,6 @@
 #include "Road.hpp"
 
-Road::Road(const Vector3 &position)
+Road::Road(const Vector3 &position, Game *game) : Entity(game)
 {
     this->SetPosition(position);
 

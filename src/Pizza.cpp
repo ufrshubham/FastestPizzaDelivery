@@ -5,7 +5,7 @@
 #include "raymath.h"
 #include "iostream"
 
-Pizza::Pizza(const AssetManager &assetManager, const Vector3 &position, const Vector3 &scale, const Vector3 &target) : m_target(Vector3Normalize(target))
+Pizza::Pizza(const AssetManager &assetManager, const Vector3 &position, const Vector3 &scale, const Vector3 &target, Game *game) : Entity(game), m_target(Vector3Normalize(target))
 {
     this->SetPosition(position);
     this->SetScale(scale);

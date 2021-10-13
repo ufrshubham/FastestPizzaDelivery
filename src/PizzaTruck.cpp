@@ -5,7 +5,7 @@
 #include "raymath.h"
 #include <limits>
 
-PizzaTruck::PizzaTruck(const AssetManager &assetManager, const Vector3 &position)
+PizzaTruck::PizzaTruck(const AssetManager &assetManager, const Vector3 &position, Game *game) : Entity(game)
 {
     this->SetPosition(position);
     m_truckModel = assetManager.Get(AssetId::PizzaTruck);
@@ -87,4 +87,14 @@ unsigned int PizzaTruck::GetCollisionLayers() const
 unsigned int PizzaTruck::GetCollidableLayers() const
 {
     return CollisionLayer::VehicleLayer;
+}
+
+void PizzaTruck::IncreaseScore(int points)
+{
+    m_score += points;
+}
+
+int PizzaTruck::GetScore() const
+{
+    return m_score;
 }

@@ -1,12 +1,14 @@
 #include "Vehicle.hpp"
 #include "CollisionLayer.hpp"
 #include "Pizza.hpp"
+#include "Command.hpp"
+#include "PizzaTruck.hpp"
 
 #include "raymath.h"
 
 #include <unordered_map>
 
-Vehicle::Vehicle(const AssetManager &assetManager, VehicleType vehicleType, const Vector3 &position, const Vector3 &scale) : m_initialPosition(position)
+Vehicle::Vehicle(const AssetManager &assetManager, VehicleType vehicleType, const Vector3 &position, const Vector3 &scale, Game *game) : Entity(game), m_initialPosition(position)
 {
     m_wantsPizza = true;
 
@@ -71,6 +73,19 @@ void Vehicle::OnCollision(const ICollidable &otherCollidable)
     if (dynamic_cast<const Pizza *>(ptr))
     {
         m_wantsPizza = false;
+
+        Command increaseScore;
+        increaseScore.type = EntityType::PizzaTruck;
+        increaseScore.action = [](Entity &entity)
+        {
+            auto pizzaTruck = dynamic_cast<PizzaTruck *>(&entity);
+            if (pizzaTruck)
+            {
+                pizzaTruck->IncreaseScore(10);
+            }
+        };
+
+        this->AddCommand(increaseScore);
     }
 }
 

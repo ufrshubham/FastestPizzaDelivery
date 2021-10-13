@@ -1,19 +1,19 @@
 #pragma once
 
-#include "Entity.hpp"
 #include "Transformable.hpp"
 #include "IDrawable.hpp"
 
 #include "raylib.h"
 
+class Game;
+
 // This class represents the white strip on road.
-class RoadStrip : public Entity,
-                  public Transformable,
+class RoadStrip : public Transformable,
                   public IDrawable
 {
 public:
-    void Update(float deltaTime) override final;
-    void Draw() const override final;
+    void Update(float deltaTime);
+    void Draw() const;
 
 private:
     float m_speed = 80.f;

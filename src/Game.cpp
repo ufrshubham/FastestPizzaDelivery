@@ -35,20 +35,21 @@ Game::Game() : m_assetManager(std::make_unique<AssetManager>())
 
     m_entities.push_front(std::make_unique<Road>(Vector3{300.f,
                                                          0.f,
-                                                         0.f}));
+                                                         0.f},
+                                                 this));
 
-    auto ptr = std::make_unique<PizzaTruck>(*m_assetManager, Vector3{0.0f, 0.0f, 0.0f});
+    auto ptr = std::make_unique<PizzaTruck>(*m_assetManager, Vector3{0.0f, 0.0f, 0.0f}, this);
     m_pizzaTruck = ptr.get();
 
     m_entities.push_front(std::move(ptr));
-    m_entities.push_front(std::make_unique<House>(*m_assetManager, Vector3{600.0f, 0.0f, -15.0f}, Vector3{20.f, 20.f, 20.f}));
+    m_entities.push_front(std::make_unique<House>(*m_assetManager, Vector3{600.0f, 0.0f, -15.0f}, Vector3{20.f, 20.f, 20.f}, this));
 
-    m_entities.push_front(std::make_unique<TreeSmall>(*m_assetManager, Vector3{500.0f, 0.0f, -25.0f}, Vector3{20.f, 20.f, 20.f}));
-    m_entities.push_front(std::make_unique<TreeSmall>(*m_assetManager, Vector3{520.0f, 0.0f, -25.0f}, Vector3{20.f, 20.f, 20.f}));
-    m_entities.push_front(std::make_unique<TreeSmall>(*m_assetManager, Vector3{550.0f, 0.0f, -30.0f}, Vector3{20.f, 20.f, 20.f}));
-    m_entities.push_front(std::make_unique<TreeSmall>(*m_assetManager, Vector3{500.0f, 0.0f, -16.0f}, Vector3{20.f, 20.f, 20.f}));
+    m_entities.push_front(std::make_unique<TreeSmall>(*m_assetManager, Vector3{500.0f, 0.0f, -25.0f}, Vector3{20.f, 20.f, 20.f}, this));
+    m_entities.push_front(std::make_unique<TreeSmall>(*m_assetManager, Vector3{520.0f, 0.0f, -25.0f}, Vector3{20.f, 20.f, 20.f}, this));
+    m_entities.push_front(std::make_unique<TreeSmall>(*m_assetManager, Vector3{550.0f, 0.0f, -30.0f}, Vector3{20.f, 20.f, 20.f}, this));
+    m_entities.push_front(std::make_unique<TreeSmall>(*m_assetManager, Vector3{500.0f, 0.0f, -16.0f}, Vector3{20.f, 20.f, 20.f}, this));
 
-    m_entities.push_front(std::make_unique<Vehicle>(*m_assetManager, VehicleType::Car, Vector3{0.0f, 0.0f, 10.0f}, Vector3{3.f, 3.f, 3.f}));
+    m_entities.push_front(std::make_unique<Vehicle>(*m_assetManager, VehicleType::Car, Vector3{0.0f, 0.0f, 10.0f}, Vector3{3.f, 3.f, 3.f}, this));
 }
 
 Game::~Game()
@@ -111,12 +112,24 @@ void Game::ProcessInputs()
     {
         auto position = m_pizzaTruck->GetPosition();
         position.y += 10.f;
-        m_entities.push_front(std::make_unique<Pizza>(*m_assetManager, position, Vector3{0.5f, 0.5f, 0.5f}, aimPosition));
+        m_entities.push_front(std::make_unique<Pizza>(*m_assetManager, position, Vector3{0.5f, 0.5f, 0.5f}, aimPosition, this));
     }
 }
 
 void Game::Update(float deltaTime)
 {
+
+    // Todo: Improve this to be more generic.
+    while (!m_commands.empty())
+    {
+        auto &command = m_commands.front();
+        if (command.type == EntityType::PizzaTruck)
+        {
+            command.action(*dynamic_cast<PizzaTruck *>(m_pizzaTruck));
+        }
+        m_commands.pop();
+    }
+
     UpdateCamera(&m_camera);
 
     if (!m_isPaused)
@@ -177,7 +190,7 @@ void Game::Draw() const
     EndMode3D();
 
     std::stringstream ss;
-    ss << "Score: " << m_score;
+    ss << "Score: " << (dynamic_cast<PizzaTruck *>(m_pizzaTruck))->GetScore();
     DrawText(ss.str().c_str(), 32, 32, 30, RAYWHITE);
 
     EndDrawing();
@@ -213,24 +226,15 @@ void Game::CheckCollisions(const std::forward_list<ICollidable *> &collidables)
                             wantsPizza = pizzaConsumer && pizzaConsumer->WantsPizza();
                         }
 
-                        // TODO: Need to move such logic to entities. To modify game state
-                        // some kind of command system of back ref to Game can be added.
-                        if (wantsPizza)
-                        {
-                            // Player should get paid only if pizza is delivered
-                            // to an entity that actually wants pizza.
-                            m_score += 10;
-                        }
-                        else
-                        {
-                            // We just gave up a free pizza
-                            m_score -= 10;
-                        }
-
                         entityA->OnCollision(*entityB);
                     }
                 }
             }
         }
     }
+}
+
+void Game::AddCommand(const Command &command)
+{
+    m_commands.push(command);
 }

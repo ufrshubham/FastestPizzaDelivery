@@ -9,6 +9,8 @@
 
 #include "raylib.h"
 
+class Game;
+
 enum class VehicleType
 {
     Car
@@ -17,7 +19,7 @@ enum class VehicleType
 class Vehicle : public Entity, public Transformable, public IDrawable, public ICollidable, public IPizzaConsumer
 {
 public:
-    Vehicle(const AssetManager &assetManager, VehicleType vehicleType, const Vector3 &position, const Vector3 &scale);
+    Vehicle(const AssetManager &assetManager, VehicleType vehicleType, const Vector3 &position, const Vector3 &scale, Game *game);
 
     void Update(float deltaTime) override final;
     void Draw() const override final;

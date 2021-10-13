@@ -8,11 +8,12 @@
 #include "raylib.h"
 
 class AssetManager;
+class Game;
 
 class Pizza : public Entity, public Transformable, public IDrawable, public ICollidable
 {
 public:
-    Pizza(const AssetManager &assetManager, const Vector3 &position, const Vector3 &scale, const Vector3 &target);
+    Pizza(const AssetManager &assetManager, const Vector3 &position, const Vector3 &scale, const Vector3 &target, Game* game);
 
     void Update(float deltaTime) override final;
     void Draw() const override final;

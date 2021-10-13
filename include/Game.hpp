@@ -4,6 +4,9 @@
 
 #include <forward_list>
 #include <memory>
+#include <queue>
+
+#include "Command.hpp"
 
 class Entity;
 class AssetManager;
@@ -18,6 +21,7 @@ public:
     virtual ~Game();
 
     void Run();
+    void AddCommand(const Command &command);
 
 private:
     // All the input handling will be done here.
@@ -48,8 +52,8 @@ private:
 
     std::unique_ptr<AssetManager> m_assetManager;
     std::forward_list<std::unique_ptr<Entity>> m_entities;
+    std::queue<Command> m_commands;
     Transformable *m_pizzaTruck = nullptr;
 
     bool m_isPaused = false;
-    int m_score = 0;
 };

@@ -9,13 +9,15 @@
 
 #include <array>
 
+class Game;
+
 // This class represents the road in game world.
 class Road : public Entity,
              public Transformable,
              public IDrawable
 {
 public:
-    Road(const Vector3 &position);
+    Road(const Vector3 &position, Game *game);
     void Update(float deltaTime) override final;
     void Draw() const override final;
 

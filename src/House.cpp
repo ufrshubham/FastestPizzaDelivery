@@ -4,7 +4,7 @@
 
 #include "raymath.h"
 
-House::House(const AssetManager &assetManager, const Vector3 &position, const Vector3 &scale) : m_initialPosition(position)
+House::House(const AssetManager &assetManager, const Vector3 &position, const Vector3 &scale, Game *game) : Entity(game), m_initialPosition(position)
 {
     this->SetPosition(position);
     this->SetScale(scale);
