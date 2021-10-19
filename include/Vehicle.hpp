@@ -32,7 +32,7 @@ public:
 
     bool WantsPizza() const override final;
 
-    EntityType Vehicle::GetEntityType() const override final;
+    EntityType GetEntityType() const override final;
 
 private:
     Model m_model = {};

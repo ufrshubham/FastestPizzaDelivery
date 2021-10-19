@@ -19,7 +19,7 @@ public:
     void Draw() const override final;
     bool ShouldDestroy() const override final;
 
-    const BoundingBox &GetCollisionBox() const;
+    const BoundingBox &GetCollisionBox() const override final;
     void OnCollision(const ICollidable &otherCollidable) override final;
 
     unsigned int GetCollisionLayers() const override final;

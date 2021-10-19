@@ -19,7 +19,7 @@ public:
     void Update(float deltaTime) override final;
     void Draw() const override final;
 
-    const BoundingBox &GetCollisionBox() const;
+    const BoundingBox &GetCollisionBox() const override final;
 
     unsigned int GetCollisionLayers() const override final;
     unsigned int GetCollidableLayers() const override final;
