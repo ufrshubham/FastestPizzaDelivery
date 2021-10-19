@@ -24,3 +24,8 @@ void TreeSmall::Draw() const
 {
     DrawModelEx(m_treeModel, this->GetPosition(), {1.f, 0.f, 0.f}, 0.f, this->GetScale(), WHITE);
 }
+
+EntityType TreeSmall::GetEntityType() const
+{
+    return EntityType::Tree;
+}

@@ -32,6 +32,8 @@ public:
 
     bool WantsPizza() const override final;
 
+    EntityType Vehicle::GetEntityType() const override final;
+
 private:
     Model m_model = {};
     BoundingBox m_boundingBox = {};

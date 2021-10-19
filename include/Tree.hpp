@@ -18,6 +18,8 @@ public:
     void Update(float deltaTime) override final;
     void Draw() const override final;
 
+    EntityType GetEntityType() const override final;
+
 private:
     Model m_treeModel = {};
 

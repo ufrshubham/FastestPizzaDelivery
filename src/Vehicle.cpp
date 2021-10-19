@@ -103,3 +103,8 @@ bool Vehicle::WantsPizza() const
 {
     return m_wantsPizza;
 }
+
+EntityType Vehicle::GetEntityType() const
+{
+    return EntityType::Vehicle;
+}

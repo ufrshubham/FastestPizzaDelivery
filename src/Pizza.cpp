@@ -85,3 +85,8 @@ unsigned int Pizza::GetCollidableLayers() const
 {
     return CollisionLayer::VehicleLayer | CollisionLayer::BuildingLayer;
 }
+
+EntityType Pizza::GetEntityType() const
+{
+    return EntityType::Pizza;
+}

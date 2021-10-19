@@ -98,3 +98,8 @@ int PizzaTruck::GetScore() const
 {
     return m_score;
 }
+
+EntityType PizzaTruck::GetEntityType() const
+{
+    return EntityType::PizzaTruck;
+}

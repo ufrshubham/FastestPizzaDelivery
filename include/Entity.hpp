@@ -1,7 +1,8 @@
 #pragma once
 
 class Game;
-struct Command;
+
+#include "Command.hpp"
 
 // This class represents a game entity.
 class Entity
@@ -19,6 +20,9 @@ public:
 
     void AddCommand(const Command &command);
 
+    virtual EntityType GetEntityType() const = 0;
+
 private:
     Game *m_game;
+    EntityType m_entityType;
 };

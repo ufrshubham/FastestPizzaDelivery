@@ -14,7 +14,7 @@ class Game;
 class House : public Entity, public Transformable, public IDrawable, public ICollidable
 {
 public:
-    House(const AssetManager &assetManager, const Vector3 &position, const Vector3 &scale, Game* game);
+    House(const AssetManager &assetManager, const Vector3 &position, const Vector3 &scale, Game *game);
 
     void Update(float deltaTime) override final;
     void Draw() const override final;
@@ -23,6 +23,7 @@ public:
 
     unsigned int GetCollisionLayers() const override final;
     unsigned int GetCollidableLayers() const override final;
+    EntityType GetEntityType() const override final;
 
 private:
     Model m_houseModel = {};

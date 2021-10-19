@@ -63,3 +63,8 @@ unsigned int House::GetCollidableLayers() const
 {
     return CollisionLayer::PizzaLayer;
 }
+
+EntityType House::GetEntityType() const
+{
+    return EntityType::House;
+}

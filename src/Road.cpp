@@ -42,3 +42,8 @@ void Road::Draw() const
         strip.Draw();
     }
 }
+
+EntityType Road::GetEntityType() const
+{
+    return EntityType::Road;
+}

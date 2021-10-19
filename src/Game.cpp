@@ -119,17 +119,6 @@ void Game::ProcessInputs()
 void Game::Update(float deltaTime)
 {
 
-    // Todo: Improve this to be more generic.
-    while (!m_commands.empty())
-    {
-        auto &command = m_commands.front();
-        if (command.type == EntityType::PizzaTruck)
-        {
-            command.action(*dynamic_cast<PizzaTruck *>(m_pizzaTruck));
-        }
-        m_commands.pop();
-    }
-
     UpdateCamera(&m_camera);
 
     if (!m_isPaused)
@@ -160,6 +149,21 @@ void Game::Update(float deltaTime)
 
         // Perform collision detection.
         this->CheckCollisions(collidables);
+
+        // Process the command queue.
+        while (!m_commands.empty())
+        {
+            auto &command = m_commands.front();
+
+            for (auto &entity : m_entities)
+            {
+                if (entity->GetEntityType() == command.type)
+                {
+                    command.action(*entity);
+                }
+            }
+            m_commands.pop();
+        }
 
         // Remove any entity that is marked for deletion.
         m_entities.remove_if([](const auto &entity)
@@ -208,24 +212,11 @@ void Game::CheckCollisions(const std::forward_list<ICollidable *> &collidables)
                 {
                     if (CheckCollisionBoxes(entityA->GetCollisionBox(), entityB->GetCollisionBox()))
                     {
-                        bool wantsPizza = false;
-
                         if (entityA->GetCollisionLayers() & CollisionLayer::PizzaTruckLayer)
                         {
                             m_isCameraShaking = true;
                             m_cameraShakeTimer = 0.5f;
                         }
-                        else if (entityA->GetCollisionLayers() & CollisionLayer::PizzaLayer)
-                        {
-                            auto pizzaConsumer = dynamic_cast<IPizzaConsumer *>(entityA);
-                            wantsPizza = pizzaConsumer && pizzaConsumer->WantsPizza();
-                        }
-                        else if (entityB->GetCollisionLayers() & CollisionLayer::PizzaLayer)
-                        {
-                            auto pizzaConsumer = dynamic_cast<IPizzaConsumer *>(entityB);
-                            wantsPizza = pizzaConsumer && pizzaConsumer->WantsPizza();
-                        }
-
                         entityA->OnCollision(*entityB);
                     }
                 }

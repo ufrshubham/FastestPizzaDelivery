@@ -8,8 +8,10 @@ enum class EntityType
 {
     Pizza,
     PizzaTruck,
-    Houze,
+    House,
     Vehicle,
+    Road,
+    Tree,
 };
 
 struct Command

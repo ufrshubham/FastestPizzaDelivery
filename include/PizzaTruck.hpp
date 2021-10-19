@@ -28,6 +28,8 @@ public:
     void IncreaseScore(int points);
     int GetScore() const;
 
+    EntityType GetEntityType() const override final;
+
 private:
     Model m_truckModel = {};
     BoundingBox m_boundingBox = {};
