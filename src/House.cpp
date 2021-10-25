@@ -4,12 +4,9 @@
 
 #include "raymath.h"
 
-House::House(const AssetManager &assetManager, const Vector3 &position, const Vector3 &scale, Game *game) : Entity(game), m_initialPosition(position)
+House::House(const AssetManager &assetManager, const Vector3 &position, const Vector3 &scale, Game *game) : Entity(game), Transformable(position)
 {
-    this->SetPosition(position);
     this->SetScale(scale);
-    // Todo: Need to improve this.
-    m_initialPosition.x = 500.0f;
     m_houseModel = assetManager.Get(AssetId::House);
 
     Vector3 boundingBoxMax = {};
@@ -31,11 +28,6 @@ House::House(const AssetManager &assetManager, const Vector3 &position, const Ve
 void House::Update(float deltaTime)
 {
     this->Move({-m_speed * deltaTime, 0.f, 0.f});
-
-    if (this->GetPosition().x < -40)
-    {
-        this->SetPosition(m_initialPosition);
-    }
 
     m_collisionBox.max = Vector3Subtract(Vector3Add(m_boundingBox.max, this->GetPosition()), {0.f, 0.f, 0.f});
     m_collisionBox.min = Vector3Add(Vector3Add(m_boundingBox.min, this->GetPosition()), {0.f, 0.f, 0.f});
@@ -67,4 +59,9 @@ unsigned int House::GetCollidableLayers() const
 EntityType House::GetEntityType() const
 {
     return EntityType::House;
+}
+
+bool House::IsResettable() const
+{
+    return true;
 }

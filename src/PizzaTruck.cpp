@@ -89,7 +89,7 @@ unsigned int PizzaTruck::GetCollidableLayers() const
     return CollisionLayer::VehicleLayer;
 }
 
-void PizzaTruck::IncreaseScore(int points)
+void PizzaTruck::AddToScore(int points)
 {
     m_score += points;
 }

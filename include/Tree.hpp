@@ -20,9 +20,10 @@ public:
 
     EntityType GetEntityType() const override final;
 
+    bool IsResettable() const override final;
+
 private:
     Model m_treeModel = {};
 
     float m_speed = 80.f;
-    Vector3 m_initialPosition = {0.f, 0.f, 0.f};
 };

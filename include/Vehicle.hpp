@@ -34,12 +34,13 @@ public:
 
     EntityType GetEntityType() const override final;
 
+    bool IsResettable() const override final;
+
 private:
     Model m_model = {};
     BoundingBox m_boundingBox = {};
     BoundingBox m_collisionBox = {};
 
     float m_speed = 110.f;
-    Vector3 m_initialPosition = {0.f, 0.f, 0.f};
     bool m_wantsPizza = false;
 };

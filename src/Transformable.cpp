@@ -1,6 +1,10 @@
 #include "Transformable.hpp"
 #include "raymath.h"
 
+Transformable::Transformable(const Vector3 &position) : m_position(position)
+{
+}
+
 Vector3 Transformable::GetPosition() const
 {
     return m_position;
@@ -29,4 +33,17 @@ void Transformable::SetScale(float scale)
 void Transformable::Move(const Vector3 &offset)
 {
     m_position = Vector3Add(m_position, offset);
+}
+
+bool Transformable::IsResettable() const
+{
+    return false;
+}
+
+void Transformable::ResetPosition()
+{
+    if (IsResettable())
+    {
+        m_position.x = 500.f;
+    }
 }

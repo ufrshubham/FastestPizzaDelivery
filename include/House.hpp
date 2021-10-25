@@ -25,6 +25,8 @@ public:
     unsigned int GetCollidableLayers() const override final;
     EntityType GetEntityType() const override final;
 
+    bool IsResettable() const override final;
+
 private:
     Model m_houseModel = {};
 
@@ -33,6 +35,4 @@ private:
 
     BoundingBox m_boundingBox = {};
     BoundingBox m_collisionBox = {};
-
-    Vector3 m_initialPosition = {0.f, 0.f, 0.f};
 };

@@ -145,6 +145,13 @@ void Game::Update(float deltaTime)
             {
                 collidables.push_front(collidable);
             }
+
+            // Reset all transformables
+            auto transformable = dynamic_cast<Transformable *>(entity.get());
+            if (transformable && (transformable->IsResettable()) && (transformable->GetPosition().x < -40.f))
+            {
+                transformable->ResetPosition();
+            }
         }
 
         // Perform collision detection.

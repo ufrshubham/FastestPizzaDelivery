@@ -8,15 +8,14 @@
 
 #include <unordered_map>
 
-Vehicle::Vehicle(const AssetManager &assetManager, VehicleType vehicleType, const Vector3 &position, const Vector3 &scale, Game *game) : Entity(game), m_initialPosition(position)
+Vehicle::Vehicle(const AssetManager &assetManager, VehicleType vehicleType, const Vector3 &position, const Vector3 &scale, Game *game) : Entity(game)
 {
     m_wantsPizza = true;
 
     static const std::unordered_map<VehicleType, AssetId> typeToAssetId{{VehicleType::Car, AssetId::Car}};
     this->SetPosition(position);
     this->SetScale(scale);
-    // Todo: Need to improve this.
-    m_initialPosition.x = 500.0f;
+
     m_model = assetManager.Get(typeToAssetId.at(vehicleType));
 
     Vector3 boundingBoxMax = {};
@@ -38,11 +37,6 @@ Vehicle::Vehicle(const AssetManager &assetManager, VehicleType vehicleType, cons
 void Vehicle::Update(float deltaTime)
 {
     this->Move({-m_speed * deltaTime, 0.f, 0.f});
-
-    if (this->GetPosition().x < -40)
-    {
-        this->SetPosition(m_initialPosition);
-    }
 
     m_collisionBox.max = Vector3Subtract(Vector3Add(m_boundingBox.max, this->GetPosition()), {0.f, 0.f, 0.f});
     m_collisionBox.min = Vector3Add(Vector3Add(m_boundingBox.min, this->GetPosition()), {0.f, 0.f, 0.f});
@@ -72,20 +66,28 @@ void Vehicle::OnCollision(const ICollidable &otherCollidable)
     auto *ptr = &otherCollidable;
     if (dynamic_cast<const Pizza *>(ptr))
     {
-        m_wantsPizza = false;
+        int points = 0;
+        Command addToScore;
+        addToScore.type = EntityType::PizzaTruck;
+        if (m_wantsPizza)
+        {
+            points = 10;
+            m_wantsPizza = false;
+        }
+        else
+        {
+            points = -5;
+        }
 
-        Command increaseScore;
-        increaseScore.type = EntityType::PizzaTruck;
-        increaseScore.action = [](Entity &entity)
+        addToScore.action = [points](Entity &entity)
         {
             auto pizzaTruck = dynamic_cast<PizzaTruck *>(&entity);
             if (pizzaTruck)
             {
-                pizzaTruck->IncreaseScore(10);
+                pizzaTruck->AddToScore(points);
             }
         };
-
-        this->AddCommand(increaseScore);
+        this->AddCommand(addToScore);
     }
 }
 
@@ -107,4 +109,9 @@ bool Vehicle::WantsPizza() const
 EntityType Vehicle::GetEntityType() const
 {
     return EntityType::Vehicle;
+}
+
+bool Vehicle::IsResettable() const
+{
+    return true;
 }

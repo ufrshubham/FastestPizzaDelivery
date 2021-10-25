@@ -25,7 +25,7 @@ public:
     unsigned int GetCollisionLayers() const override final;
     unsigned int GetCollidableLayers() const override final;
 
-    void IncreaseScore(int points);
+    void AddToScore(int points);
     int GetScore() const;
 
     EntityType GetEntityType() const override final;
