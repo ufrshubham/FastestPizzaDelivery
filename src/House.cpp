@@ -30,7 +30,14 @@ House::House(const AssetManager &assetManager, const Vector3 &position, const Ve
 
 void House::Update(float deltaTime)
 {
-    m_wantsPizza = m_orderPlacer.ShouldPlaceOrder(deltaTime, m_wantsPizza);
+    if (m_wantsPizza = m_orderPlacer.ShouldPlaceOrder(deltaTime, m_wantsPizza))
+    {
+        m_orderIndicatorOffset += m_orderIndicatorSpeed * deltaTime;
+        if ((m_orderIndicatorOffset > 17.f) || (m_orderIndicatorOffset < 14.f))
+        {
+            m_orderIndicatorSpeed *= -1;
+        }
+    }
 
     this->Move({-m_speed * deltaTime, 0.f, 0.f});
 
@@ -42,8 +49,8 @@ void House::Draw() const
 {
     if (this->WantsPizza())
     {
-        auto markerPos = Vector3Add(this->GetPosition(), {0.f, 15.f, 0.f});
-        DrawCylinder(markerPos, 2.f, 0.f, 3.0f, 8, BLACK);
+        auto markerPos = Vector3Add(this->GetPosition(), {0.f, m_orderIndicatorOffset, 0.f});
+        DrawCylinder(markerPos, 2.f, 0.f, 3.0f, 8, WHITE);
     }
 
     DrawModelEx(m_houseModel, this->GetPosition(), {1.f, 0.f, 0.f}, 0.f, this->GetScale(), WHITE);

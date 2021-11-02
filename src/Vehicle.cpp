@@ -35,7 +35,14 @@ Vehicle::Vehicle(const AssetManager &assetManager, VehicleType vehicleType, cons
 
 void Vehicle::Update(float deltaTime)
 {
-    m_wantsPizza = m_orderPlacer.ShouldPlaceOrder(deltaTime, m_wantsPizza);
+    if (m_wantsPizza = m_orderPlacer.ShouldPlaceOrder(deltaTime, m_wantsPizza))
+    {
+        m_orderIndicatorOffset += m_orderIndicatorSpeed * deltaTime;
+        if ((m_orderIndicatorOffset > 7.f) || (m_orderIndicatorOffset < 4.f))
+        {
+            m_orderIndicatorSpeed *= -1;
+        }
+    }
 
     this->Move({-m_speed * deltaTime, 0.f, 0.f});
 
@@ -47,8 +54,8 @@ void Vehicle::Draw() const
 {
     if (this->WantsPizza())
     {
-        auto markerPos = Vector3Add(this->GetPosition(), {0.f, 5.f, 0.f});
-        DrawCylinder(markerPos, 2.f, 0.f, 3.0f, 8, BLACK);
+        auto markerPos = Vector3Add(this->GetPosition(), {0.f, m_orderIndicatorOffset, 0.f});
+        DrawCylinder(markerPos, 2.f, 0.f, 3.0f, 8, WHITE);
     }
 
     DrawModelEx(m_model, this->GetPosition(), {0.f, 0.f, 0.f}, 0.f, this->GetScale(), WHITE);

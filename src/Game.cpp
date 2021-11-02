@@ -33,7 +33,7 @@ Game::Game() : m_assetManager(std::make_unique<AssetManager>())
     m_assetManager->Load(AssetId::TreeSmall, "resources/models/trees/treeSmall.gltf");
     m_assetManager->Load(AssetId::Car, "resources/models/vehicles/low-poly_car/car.gltf");
 
-    m_entities.push_front(std::make_unique<Road>(Vector3{300.f,
+    m_entities.push_front(std::make_unique<Road>(Vector3{450.f,
                                                          0.f,
                                                          0.f},
                                                  this));

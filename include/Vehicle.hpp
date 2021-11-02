@@ -41,11 +41,14 @@ public:
 
 private:
     Model m_model = {};
-    BoundingBox m_boundingBox = {};
-    BoundingBox m_collisionBox = {};
 
     float m_speed = 110.f;
+    float m_orderIndicatorSpeed = 10.f;
+    float m_orderIndicatorOffset = 5.f;
+
     bool m_wantsPizza = false;
 
+    BoundingBox m_boundingBox = {};
+    BoundingBox m_collisionBox = {};
     OrderPlacer m_orderPlacer;
 };

@@ -38,10 +38,12 @@ private:
 
     // Todo: Does not belong here. Better to extract it out as world speed.
     float m_speed = 80.f;
+    float m_orderIndicatorSpeed = 10.f;
+    float m_orderIndicatorOffset = 15.f;
+
+    bool m_wantsPizza = false;
 
     BoundingBox m_boundingBox = {};
     BoundingBox m_collisionBox = {};
-    bool m_wantsPizza = false;
-
     OrderPlacer m_orderPlacer;
 };
