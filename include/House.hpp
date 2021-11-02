@@ -4,6 +4,8 @@
 #include "Transformable.hpp"
 #include "IDrawable.hpp"
 #include "ICollidable.hpp"
+#include "IPizzaConsumer.hpp"
+#include "OrderPlacer.hpp"
 
 #include "raylib.h"
 
@@ -11,7 +13,7 @@ class AssetManager;
 class Game;
 
 // This class represents a house in game world.
-class House : public Entity, public Transformable, public IDrawable, public ICollidable
+class House : public Entity, public Transformable, public IDrawable, public ICollidable, public IPizzaConsumer
 {
 public:
     House(const AssetManager &assetManager, const Vector3 &position, const Vector3 &scale, Game *game);
@@ -20,12 +22,16 @@ public:
     void Draw() const override final;
 
     const BoundingBox &GetCollisionBox() const override final;
+    void OnCollision(const ICollidable &otherCollidable) override final;
 
     unsigned int GetCollisionLayers() const override final;
     unsigned int GetCollidableLayers() const override final;
+
     EntityType GetEntityType() const override final;
 
     bool IsResettable() const override final;
+
+    bool WantsPizza() const override final;
 
 private:
     Model m_houseModel = {};
@@ -35,4 +41,7 @@ private:
 
     BoundingBox m_boundingBox = {};
     BoundingBox m_collisionBox = {};
+    bool m_wantsPizza = false;
+
+    OrderPlacer m_orderPlacer;
 };

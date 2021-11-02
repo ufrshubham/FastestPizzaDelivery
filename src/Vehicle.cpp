@@ -8,10 +8,9 @@
 
 #include <unordered_map>
 
-Vehicle::Vehicle(const AssetManager &assetManager, VehicleType vehicleType, const Vector3 &position, const Vector3 &scale, Game *game) : Entity(game)
+Vehicle::Vehicle(const AssetManager &assetManager, VehicleType vehicleType, const Vector3 &position, const Vector3 &scale, Game *game)
+    : Entity(game), m_orderPlacer(std::pair(3, 6), std::pair(5, 8))
 {
-    m_wantsPizza = true;
-
     static const std::unordered_map<VehicleType, AssetId> typeToAssetId{{VehicleType::Car, AssetId::Car}};
     this->SetPosition(position);
     this->SetScale(scale);
@@ -36,6 +35,8 @@ Vehicle::Vehicle(const AssetManager &assetManager, VehicleType vehicleType, cons
 
 void Vehicle::Update(float deltaTime)
 {
+    m_wantsPizza = m_orderPlacer.ShouldPlaceOrder(deltaTime, m_wantsPizza);
+
     this->Move({-m_speed * deltaTime, 0.f, 0.f});
 
     m_collisionBox.max = Vector3Subtract(Vector3Add(m_boundingBox.max, this->GetPosition()), {0.f, 0.f, 0.f});

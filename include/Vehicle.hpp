@@ -6,8 +6,11 @@
 #include "ICollidable.hpp"
 #include "AssetManager.hpp"
 #include "IPizzaConsumer.hpp"
+#include "OrderPlacer.hpp"
 
 #include "raylib.h"
+
+#include <utility>
 
 class Game;
 
@@ -43,4 +46,6 @@ private:
 
     float m_speed = 110.f;
     bool m_wantsPizza = false;
+
+    OrderPlacer m_orderPlacer;
 };
