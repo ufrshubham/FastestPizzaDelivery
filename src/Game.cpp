@@ -18,6 +18,8 @@ Game::Game() : m_assetManager(std::make_unique<AssetManager>())
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, TITLE);
     //SetWindowState(FLAG_FULLSCREEN_MODE);
 
+    InitAudioDevice();
+
     m_camera.position = {-30.f, 16.0f, 0.0f};  // {-25.f, 18.0f, 25.0f}; // Camera position. Alt-position {-30.f, 16.0f, 0.0f}
     m_camera.target = m_initialTargetPosition; // Camera looking at point
     m_camera.up = {0.0f, 1.0f, 0.0f};          // Camera up vector (rotation towards target)
@@ -50,10 +52,16 @@ Game::Game() : m_assetManager(std::make_unique<AssetManager>())
     m_entities.push_front(std::make_unique<TreeSmall>(*m_assetManager, Vector3{500.0f, 0.0f, -16.0f}, Vector3{20.f, 20.f, 20.f}, this));
 
     m_entities.push_front(std::make_unique<Vehicle>(*m_assetManager, VehicleType::Car, Vector3{0.0f, 0.0f, 10.0f}, Vector3{3.f, 3.f, 3.f}, this));
+
+    m_music = LoadMusicStream("resources/audio/1. The Teal of the Tropical.wav");
+    SetMusicVolume(m_music, 0.4f);
+    m_music.looping = true;
+    PlayMusicStream(m_music);
 }
 
 Game::~Game()
 {
+    UnloadMusicStream(m_music);
     CloseWindow();
 }
 
@@ -85,6 +93,14 @@ void Game::ProcessInputs()
 
     if (IsKeyPressed(KEY_P))
     {
+        if (m_isPaused)
+        {
+            ResumeMusicStream(m_music);
+        }
+        else
+        {
+            PauseMusicStream(m_music);
+        }
         m_isPaused = !m_isPaused;
     }
 
@@ -123,6 +139,8 @@ void Game::Update(float deltaTime)
 
     if (!m_isPaused)
     {
+        UpdateMusicStream(m_music);
+
         if (m_cameraShakeTimer > 0.f)
         {
             m_cameraShakeTimer -= deltaTime;

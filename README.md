@@ -65,3 +65,5 @@ cmake ..
 - [City Kit (Suburban)](https://www.kenney.nl/assets/city-kit-suburban) by [Kenney](www.kenney.nl) is licensed under [Creative Commons Zero, CC0](http://creativecommons.org/publicdomain/zero/1.0/)
 
 - [Low-Poly Car](https://sketchfab.com/3d-models/low-poly-car-3bee85b8530046e5bb11a57965129187) by [Lawrence Pompey](https://sketchfab.com/lawrencepompey) is licensed under [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/)
+
+- [The Teal of the Tropical](https://www.void1gaming.com/pop-music-pack) by [VOiD1 Gamin](https://www.void1gaming.com/) is licensed under a custom license. Please see their site for details.

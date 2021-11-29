@@ -56,4 +56,5 @@ private:
     Transformable *m_pizzaTruck = nullptr;
 
     bool m_isPaused = false;
+    Music m_music;
 };

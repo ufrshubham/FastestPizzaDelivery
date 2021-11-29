@@ -47,7 +47,7 @@ void PizzaTruck::ProcessInputs()
 
 void PizzaTruck::Update(float deltaTime)
 {
-    if (m_truckRoll > 2 || m_truckRoll < -2)
+    if (m_truckRoll > 3 || m_truckRoll < -3)
     {
         m_deltaRoll = -1 * m_deltaRoll;
     }
